@@ -1,0 +1,16 @@
+/index.html
+  Content-Type: text/html; charset=UTF-8
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Cache-Control: public, max-age=3600
+
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/manifest.json
+  Content-Type: application/manifest+json
