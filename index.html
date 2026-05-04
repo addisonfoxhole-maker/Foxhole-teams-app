@@ -90,7 +90,7 @@
   .top-actions { display: flex; gap: 6px; align-items: center; }
   .avatar-sm { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; }
 
-  .back-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px 8px; flex-shrink: 0; }
+  .back-bar { display: flex; align-items: center; gap: 8px; padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 8px; flex-shrink: 0; }
   .back-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--text-2); }
   .back-btn:active { background: var(--bg-2); }
   .back-btn svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -98,7 +98,7 @@
   .back-crumb .crumb-top { font-family: var(--font-mono); font-size: 10px; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; }
   .back-crumb .crumb-title { font-size: 15px; font-weight: 600; margin-top: 2px; }
 
-  .nav { background: var(--bg-0); border-top: 1px solid var(--border); display: flex; padding: 8px 0 max(8px, env(safe-area-inset-bottom, 8px)); flex-shrink: 0; }
+  .nav { background: var(--bg-0); border-top: 1px solid var(--border); display: flex; padding: 8px 0 max(4px, calc(env(safe-area-inset-bottom, 8px) * 0.5)); flex-shrink: 0; }
   .nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; color: var(--text-3); }
   .nav-btn svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
   .nav-btn .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.02em; }
