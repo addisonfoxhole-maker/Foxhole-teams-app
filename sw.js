@@ -1,4 +1,4 @@
-const CACHE = 'fh-v30';
+const CACHE = 'fh-v31';
 const STATIC = ['/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', e => {
