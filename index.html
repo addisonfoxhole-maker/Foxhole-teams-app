@@ -72,6 +72,9 @@
   .theme-toggle .sun { display: none; }
   [data-theme="dark"] .theme-toggle .sun { display: block; }
   [data-theme="dark"] .theme-toggle .moon { display: none; }
+  .exit-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); flex-shrink: 0; }
+  .exit-btn:active { background: var(--bg-3); }
+  .exit-btn svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
   .brand-mark { width: 36px; height: 36px; background: var(--brand-grad); border-radius: 9px; position: relative; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .brand-mark::after { content: ''; position: absolute; inset: 5px; background: var(--bg-0); border-radius: 5px; }
@@ -967,7 +970,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
   <section class="screen" data-screen="sa-home">
     <div class="top-bar" style="flex-shrink:0;">
       <div class="top-brand-row"><div class="brand-mark"><span>F</span></div><div class="brand-wordmark"><div class="name">Foxhole</div><div class="sub">SERVICE ADVISOR</div></div></div>
-      <div class="top-actions"><button class="theme-toggle" onclick="toggleTheme()"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button><div class="avatar-sm" id="sa-avatar">—</div></div>
+      <div class="top-actions"><button class="theme-toggle" onclick="toggleTheme()"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button><button class="exit-btn" onclick="goTo('login')" aria-label="Log out"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg></button><div class="avatar-sm" id="sa-avatar">—</div></div>
     </div>
     <!-- Inline help blurb — NNG Contextual Help 2020 — PURPOSE: read-only summary of the week -->
     <div class="help-blurb" id="sa-home-help" style="display:none;">
@@ -1033,15 +1036,16 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     </div>
     <nav class="nav">
       <button class="nav-btn active" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M3 12 L12 4 L21 12 M5 10 V20 H19 V10"/></svg><span class="nav-label">Home</span></button>
-      <button class="nav-btn nav-center" onclick="goTo('sa-training')"><div class="nav-center-icon"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg></div><span class="nav-label">Training</span></button>
-      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></svg><span class="nav-label">Log Entry</span></button>
-      <button class="nav-btn" onclick="goTo('login')"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg><span class="nav-label">Exit</span></button>
+      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="nav-label">Cashflow</span></button>
+      <button class="nav-btn" onclick="goTo('sa-whatif')"><svg viewBox="0 0 24 24"><path d="M3 4h18v18H3z M3 10h18 M8 2v4 M16 2v4"/></svg><span class="nav-label">Plan</span></button>
+      <button class="nav-btn" onclick="goTo('sa-parts')"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5l-9 5l9 5l9-5z M3 8v8l9 5l9-5V8 M12 13v9"/></svg><span class="nav-label">Parts</span></button>
+      <button class="nav-btn" onclick="goTo('sa-training')"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg><span class="nav-label">Training</span></button>
     </nav>
   </section>
 
   <!-- ═══════ SA COMMAND — Revenue Hero ═══════ -->
   <section class="screen" data-screen="sa-command">
-    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Command · Live / Cashflow</div><div class="crumb-title">Log Entries Here</div></div></div>
+    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Command · Live / Cashflow</div><div class="crumb-title">Log Entries Here</div></div><button class="exit-btn" onclick="goTo('login')" aria-label="Log out"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg></button></div>
 
     <div class="scroll-area">
       <div class="sa-hero">
@@ -1107,15 +1111,16 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     </div>
     <nav class="nav">
       <button class="nav-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M3 12 L12 4 L21 12 M5 10 V20 H19 V10"/></svg><span class="nav-label">Home</span></button>
-      <button class="nav-btn nav-center" onclick="goTo('sa-training')"><div class="nav-center-icon"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg></div><span class="nav-label">Training</span></button>
-      <button class="nav-btn active" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></svg><span class="nav-label">Log Entry</span></button>
-      <button class="nav-btn" onclick="goTo('login')"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg><span class="nav-label">Exit</span></button>
+      <button class="nav-btn active" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="nav-label">Cashflow</span></button>
+      <button class="nav-btn" onclick="goTo('sa-whatif')"><svg viewBox="0 0 24 24"><path d="M3 4h18v18H3z M3 10h18 M8 2v4 M16 2v4"/></svg><span class="nav-label">Plan</span></button>
+      <button class="nav-btn" onclick="goTo('sa-parts')"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5l-9 5l9 5l9-5z M3 8v8l9 5l9-5V8 M12 13v9"/></svg><span class="nav-label">Parts</span></button>
+      <button class="nav-btn" onclick="goTo('sa-training')"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg><span class="nav-label">Training</span></button>
     </nav>
   </section>
 
   <!-- ═══════ SA PARTS — My Turn / Their Turn / Done ═══════ -->
   <section class="screen" data-screen="sa-parts">
-    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Tracking</div><div class="crumb-title">Parts</div></div></div>
+    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Tracking</div><div class="crumb-title">Parts</div></div><button class="exit-btn" onclick="goTo('login')" aria-label="Log out"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg></button></div>
     <div class="scroll-area">
       <div class="parts-legend">
         <div class="pl-title">Parts Status Guide</div>
@@ -1128,16 +1133,17 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     <button class="fab" onclick="openPanel('parts-panel')">+</button>
     <nav class="nav">
       <button class="nav-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M3 12 L12 4 L21 12 M5 10 V20 H19 V10"/></svg><span class="nav-label">Home</span></button>
-      <button class="nav-btn nav-center" onclick="goTo('sa-training')"><div class="nav-center-icon"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg></div><span class="nav-label">Training</span></button>
-      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></svg><span class="nav-label">Log Entry</span></button>
-      <button class="nav-btn" onclick="goTo('login')"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg><span class="nav-label">Exit</span></button>
+      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="nav-label">Cashflow</span></button>
+      <button class="nav-btn" onclick="goTo('sa-whatif')"><svg viewBox="0 0 24 24"><path d="M3 4h18v18H3z M3 10h18 M8 2v4 M16 2v4"/></svg><span class="nav-label">Plan</span></button>
+      <button class="nav-btn active" onclick="goTo('sa-parts')"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5l-9 5l9 5l9-5z M3 8v8l9 5l9-5V8 M12 13v9"/></svg><span class="nav-label">Parts</span></button>
+      <button class="nav-btn" onclick="goTo('sa-training')"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg><span class="nav-label">Training</span></button>
     </nav>
   </section>
 
 
   <!-- ═══════ SA TRAINING ═══════ -->
   <section class="screen" data-screen="sa-training">
-    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Learning</div><div class="crumb-title">Training</div></div></div>
+    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Learning</div><div class="crumb-title">Training</div></div><button class="exit-btn" onclick="goTo('login')" aria-label="Log out"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg></button></div>
     <div class="scroll-area">
       <div id="fh-sa-mount"><iframe src="https://foxhole-service-advisor.addisonfoxhole.workers.dev/" style="width:100%;height:100%;border:none;display:block;" allow="storage-access"></iframe></div>
       <div style="padding:0 16px 24px;">
@@ -1150,9 +1156,10 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     </div>
     <nav class="nav">
       <button class="nav-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M3 12 L12 4 L21 12 M5 10 V20 H19 V10"/></svg><span class="nav-label">Home</span></button>
-      <button class="nav-btn nav-center active" onclick="goTo('sa-training')"><div class="nav-center-icon"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg></div><span class="nav-label">Training</span></button>
-      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></svg><span class="nav-label">Log Entry</span></button>
-      <button class="nav-btn" onclick="goTo('login')"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg><span class="nav-label">Exit</span></button>
+      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="nav-label">Cashflow</span></button>
+      <button class="nav-btn" onclick="goTo('sa-whatif')"><svg viewBox="0 0 24 24"><path d="M3 4h18v18H3z M3 10h18 M8 2v4 M16 2v4"/></svg><span class="nav-label">Plan</span></button>
+      <button class="nav-btn" onclick="goTo('sa-parts')"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5l-9 5l9 5l9-5z M3 8v8l9 5l9-5V8 M12 13v9"/></svg><span class="nav-label">Parts</span></button>
+      <button class="nav-btn active" onclick="goTo('sa-training')"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg><span class="nav-label">Training</span></button>
     </nav>
   </section>
 
@@ -1512,7 +1519,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
 
   <!-- ═══════ SA WHAT-IF PLANNER ═══════ -->
   <section class="screen" data-screen="sa-whatif">
-    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Command · Forecasting</div><div class="crumb-title">Week Planner</div></div></div>
+    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Command · Forecasting</div><div class="crumb-title">Week Planner</div></div><button class="exit-btn" onclick="goTo('login')" aria-label="Log out"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg></button></div>
     <!-- Help blurb: NNG contextual help pattern -->
     <div class="help-blurb" id="whatif-help" style="display:none;">
       <div class="hb-text">This is your paper-trading tool — like modeling a stock position before you buy. Enter estimated job values by day. The app shows what your week looks like before it happens. Numbers here are theoretical and never touch live cashflow.</div>
@@ -1567,21 +1574,23 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     </div>
     <nav class="nav">
       <button class="nav-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M3 12 L12 4 L21 12 M5 10 V20 H19 V10"/></svg><span class="nav-label">Home</span></button>
-      <button class="nav-btn nav-center" onclick="goTo('sa-training')"><div class="nav-center-icon"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg></div><span class="nav-label">Training</span></button>
-      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></svg><span class="nav-label">Log Entry</span></button>
-      <button class="nav-btn" onclick="goTo('login')"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg><span class="nav-label">Exit</span></button>
+      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="nav-label">Cashflow</span></button>
+      <button class="nav-btn active" onclick="goTo('sa-whatif')"><svg viewBox="0 0 24 24"><path d="M3 4h18v18H3z M3 10h18 M8 2v4 M16 2v4"/></svg><span class="nav-label">Plan</span></button>
+      <button class="nav-btn" onclick="goTo('sa-parts')"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5l-9 5l9 5l9-5z M3 8v8l9 5l9-5V8 M12 13v9"/></svg><span class="nav-label">Parts</span></button>
+      <button class="nav-btn" onclick="goTo('sa-training')"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg><span class="nav-label">Training</span></button>
     </nav>
   </section>
 
   <!-- ═══════ SA NOTES (FUNCTIONAL) ═══════ -->
   <section class="screen" data-screen="sa-notes">
-    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Internal</div><div class="crumb-title">Notes</div></div><button class="note-add-btn" onclick="openPanel('notes-panel')"><svg viewBox="0 0 24 24"><path d="M12 5 V19 M5 12 H19"/></svg> New Note</button></div>
+    <div class="back-bar"><button class="back-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Internal</div><div class="crumb-title">Notes</div></div><button class="note-add-btn" onclick="openPanel('notes-panel')"><svg viewBox="0 0 24 24"><path d="M12 5 V19 M5 12 H19"/></svg> New Note</button><button class="exit-btn" onclick="goTo('login')" aria-label="Log out"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg></button></div>
     <div class="scroll-area" id="notes-scroll"></div>
     <nav class="nav">
       <button class="nav-btn" onclick="goTo('sa-home')"><svg viewBox="0 0 24 24"><path d="M3 12 L12 4 L21 12 M5 10 V20 H19 V10"/></svg><span class="nav-label">Home</span></button>
-      <button class="nav-btn nav-center" onclick="goTo('sa-training')"><div class="nav-center-icon"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg></div><span class="nav-label">Training</span></button>
-      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 5V19M5 12H19"/></svg><span class="nav-label">Log Entry</span></button>
-      <button class="nav-btn" onclick="goTo('login')"><svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg><span class="nav-label">Exit</span></button>
+      <button class="nav-btn" onclick="goTo('sa-command')"><svg viewBox="0 0 24 24"><path d="M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="nav-label">Cashflow</span></button>
+      <button class="nav-btn" onclick="goTo('sa-whatif')"><svg viewBox="0 0 24 24"><path d="M3 4h18v18H3z M3 10h18 M8 2v4 M16 2v4"/></svg><span class="nav-label">Plan</span></button>
+      <button class="nav-btn" onclick="goTo('sa-parts')"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5l-9 5l9 5l9-5z M3 8v8l9 5l9-5V8 M12 13v9"/></svg><span class="nav-label">Parts</span></button>
+      <button class="nav-btn" onclick="goTo('sa-training')"><svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg><span class="nav-label">Training</span></button>
     </nav>
   </section>
 
