@@ -121,12 +121,101 @@
   .empty-state .empty-desc { font-size: 13px; color: var(--text-3); line-height: 1.45; margin-bottom: 18px; }
   .empty-state .empty-cta { display: inline-flex; align-items: center; gap: 6px; padding: 12px 20px; background: var(--gold); color: #0A0A0A; border-radius: 10px; font-weight: 600; font-size: 14px; }
 
-  /* Tabs */
-  .tabs-bar { display: flex; gap: 2px; padding: 0 14px; margin: 8px 0 4px; border-bottom: 1px solid var(--border); }
-  .tab-btn { padding: 12px; font-size: 13px; font-weight: 600; color: var(--text-3); border-bottom: 2px solid transparent; margin-bottom: -1px; flex: 1; text-align: center; }
-  .tab-btn.active { color: var(--text-1); border-bottom-color: var(--gold); }
-  .tab-panel { display: none; padding: 16px 18px 20px; }
+  /* v33: Tabs bar with sliding gold indicator */
+  .tabs-bar { display: flex; gap: 2px; padding: 0 14px; margin: 8px 0 0; border-bottom: 1px solid var(--border); position: relative; }
+  .tab-btn { padding: 12px; font-size: 13px; font-weight: 600; color: var(--text-3); flex: 1; text-align: center; transition: color 180ms var(--ease); position: relative; z-index: 1; }
+  .tab-btn.active { color: var(--text-1); }
+  .tab-indicator { position: absolute; bottom: -1px; height: 2px; background: var(--gold); border-radius: 2px 2px 0 0; transition: transform 260ms var(--ease), width 260ms var(--ease); pointer-events: none; }
+  .tab-context { padding: 8px 18px 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); min-height: 14px; }
+  .tab-panel { display: none; padding: 12px 18px 20px; }
   .tab-panel.active { display: block; }
+
+  /* v33: Make selector */
+  .make-bar { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; padding: 12px 14px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; }
+  .make-bar-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--text-3); text-transform: uppercase; flex-shrink: 0; }
+  .make-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--bg-2); border: 1px solid var(--border); border-radius: 9px; font-size: 13px; font-weight: 600; color: var(--text-1); flex: 1; justify-content: space-between; min-height: 40px; }
+  .make-chip:active { background: var(--bg-3, var(--bg-2)); }
+  .make-chip .chev { color: var(--text-3); font-size: 14px; }
+  .make-chip-change { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--gold-text); text-transform: uppercase; }
+
+  /* v33: Make picker overlay */
+  .make-picker { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 4px 0 12px; }
+  .make-pick { padding: 14px 12px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--text-1); text-align: left; min-height: 56px; }
+  .make-pick.active { background: var(--gold-bg); border-color: var(--gold); color: var(--gold-text); }
+  .make-pick.disabled { opacity: 0.45; }
+  .make-pick .mp-sub { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; color: var(--text-3); text-transform: uppercase; margin-top: 4px; font-weight: 500; }
+
+  /* v33: Diagnostic panel chrome */
+  .diag-panel-head { margin-bottom: 14px; }
+  .diag-panel-head .dph-title { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; line-height: 1.2; }
+  .diag-panel-head .dph-make { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--text-3); text-transform: uppercase; }
+
+  .diag-section { margin-top: 18px; }
+  .diag-section-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: var(--gold-text); text-transform: uppercase; margin-bottom: 10px; }
+  .diag-list { display: flex; flex-direction: column; gap: 0; background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .diag-list-item { padding: 14px 16px; font-size: 14px; line-height: 1.5; color: var(--text-1); border-bottom: 1px solid var(--border); }
+  .diag-list-item:last-child { border-bottom: none; }
+
+  .diag-branches { display: flex; flex-direction: column; gap: 10px; }
+  .diag-branch { padding: 14px 16px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; }
+  .diag-branch .br-if { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: var(--text-3); text-transform: uppercase; margin-bottom: 6px; }
+  .diag-branch .br-then { font-size: 14px; line-height: 1.5; color: var(--text-1); }
+
+  .diag-known { display: flex; flex-direction: column; gap: 8px; }
+  .diag-known-row { padding: 12px 14px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; line-height: 1.5; color: var(--text-2); }
+  .diag-known-row strong { color: var(--text-1); font-weight: 600; }
+
+  .diag-empty { padding: 18px 16px; background: var(--bg-1); border: 1px dashed var(--border-strong); border-radius: 12px; font-size: 13px; color: var(--text-3); text-align: center; line-height: 1.5; }
+
+  /* v33: Voltage spec card */
+  .volt-block { margin-top: 18px; padding: 14px 16px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; }
+  .volt-block-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: var(--gold-text); text-transform: uppercase; margin-bottom: 10px; }
+  .volt-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--border); align-items: baseline; }
+  .volt-row:last-child { border-bottom: none; }
+  .volt-row .vk { font-size: 13px; color: var(--text-2); line-height: 1.4; }
+  .volt-row .vv { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-1); white-space: nowrap; text-align: right; }
+
+  /* v33: Diagnostic panel actions */
+  .diag-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); }
+  .diag-action-btn { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 16px; height: 56px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--text-1); }
+  .diag-action-btn:active { transform: scale(0.99); background: var(--bg-2); }
+  .diag-action-btn.primary { background: var(--gold); color: #0A0A0A; border-color: var(--gold); }
+  .diag-action-btn .da-arrow { color: var(--text-3); font-size: 16px; flex-shrink: 0; }
+  .diag-action-btn.primary .da-arrow { color: rgba(0,0,0,0.55); }
+
+  /* v33: Glove-friendly diag tile (88px) */
+  .diag-tile-v33 { min-height: 88px; padding: 16px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 14px; text-align: left; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }
+  .diag-tile-v33:active { transform: scale(0.98); background: var(--bg-2); }
+  .diag-tile-v33 .dt-icon { width: 32px; height: 32px; background: var(--bg-2); color: var(--text-2); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .diag-tile-v33 .dt-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .diag-tile-v33 .dt-name { font-size: 14px; font-weight: 600; line-height: 1.25; }
+
+  /* v33: External link cards */
+  .ext-cards { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+  .ext-card { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 12px; min-height: 64px; text-align: left; width: 100%; }
+  .ext-card:active { transform: scale(0.99); background: var(--bg-2); }
+  .ext-card.disabled { opacity: 0.55; }
+  .ext-card .ec-mark { width: 36px; height: 36px; border-radius: 9px; background: var(--bg-2); color: var(--text-1); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .ext-card .ec-body { flex: 1; min-width: 0; }
+  .ext-card .ec-title { font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 2px; }
+  .ext-card .ec-sub { font-size: 12px; color: var(--text-3); line-height: 1.35; }
+  .ext-card .ec-arrow { color: var(--text-3); font-size: 16px; flex-shrink: 0; }
+
+  /* v33: Workflow steps tappable + gold bookmark */
+  .wf-step { min-height: 64px; cursor: pointer; transition: border-color 180ms var(--ease), background 180ms var(--ease); }
+  .wf-step:active { transform: scale(0.995); }
+  .wf-step.gold-bookmark { border-color: var(--gold); background: var(--gold-bg); }
+  .wf-step.gold-bookmark .wf-num { background: var(--gold); color: #0A0A0A; }
+
+  /* v33: Workflow step panel content */
+  .wfp-reframe { font-size: 17px; font-weight: 600; line-height: 1.35; margin-bottom: 14px; color: var(--text-1); }
+  .wfp-reminders { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .wfp-reminder { padding: 12px 14px; background: var(--bg-1); border: 1px solid var(--border); border-radius: 10px; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+  .wfp-easy { padding: 12px 14px; background: var(--gold-bg); border: 1px solid var(--gold); border-radius: 10px; }
+  .wfp-easy-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: var(--gold-text); text-transform: uppercase; margin-bottom: 4px; }
+  .wfp-easy-text { font-size: 13px; color: var(--text-1); line-height: 1.45; }
+  .wfp-crosslink { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 16px; height: 56px; margin-top: 14px; background: var(--bg-1); border: 1px solid var(--gold); border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--gold-text); width: 100%; }
+  .wfp-crosslink:active { transform: scale(0.99); background: var(--gold-bg); }
 
   /* Affirmation */
   .affirm-strip { margin: 4px 14px 14px; padding: 16px 18px; background: var(--bg-1); border: 1px dashed var(--border-strong); border-radius: 14px; text-align: center; }
@@ -868,34 +957,35 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
   <!-- ═══════ TECH FIELD (v2 library — preserved) ═══════ -->
   <section class="screen" data-screen="tech-field">
     <div class="back-bar"><button class="back-btn" onclick="goTo('tech-home')"><svg viewBox="0 0 24 24"><path d="M15 6 L9 12 L15 18"/></svg></button><div class="back-crumb"><div class="crumb-top">Quick reference</div><div class="crumb-title">Field</div></div><button class="theme-toggle" onclick="toggleTheme()"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button></div>
-    <div class="tabs-bar"><button class="tab-btn active" onclick="switchTab(this,'wf-workflow')">Workflow</button><button class="tab-btn" onclick="switchTab(this,'wf-diag')">Diagnostic</button><button class="tab-btn" onclick="switchTab(this,'wf-ref')">Quick Ref</button></div>
+    <div class="tabs-bar" id="wf-tabs-bar"><button class="tab-btn active" data-tab="wf-workflow" onclick="switchTab(this,'wf-workflow')">Workflow</button><button class="tab-btn" data-tab="wf-diag" onclick="switchTab(this,'wf-diag')">Diagnostic</button><button class="tab-btn" data-tab="wf-ref" onclick="switchTab(this,'wf-ref')">Quick Ref</button><div class="tab-indicator" id="wf-tab-indicator"></div></div>
+    <div class="tab-context" id="wf-tab-context">Where you are right now in the job</div>
     <div class="scroll-area">
       <div class="tab-panel active" id="wf-workflow">
         <div class="workflow-calm"><div class="breathe">◦ Breathe ◦</div><div class="message">You're doing great.</div><div class="submsg">Here's what comes next. One step at a time.</div></div>
         <div class="role-switch"><button class="active" onclick="switchWfRole(this,'tech')">Tech</button><button onclick="switchWfRole(this,'sa')">Service Advisor</button></div>
         <div id="wf-tech">
           <div class="wf-steps">
-            <div class="wf-step"><div class="wf-num">01</div><div class="wf-body"><div class="wf-title">Get to the Job</div><div class="wf-desc">Arrive on time. Park safely. Greet the customer. Smile.</div></div></div>
-            <div class="wf-step"><div class="wf-num">02</div><div class="wf-body"><div class="wf-title">Inspect in ARI</div><div class="wf-desc">Run the inspection template. Photograph everything. Don't skip steps.</div></div></div>
-            <div class="wf-step active"><div class="wf-num">03</div><div class="wf-body"><div class="wf-title">Run the Diagnostic</div><div class="wf-desc">Confirm the complaint. Isolate the cause. Write down what you find.</div><div class="wf-tag">Internal: diagnostic · Customer: Parts Recon Mission</div></div></div>
-            <div class="wf-step"><div class="wf-num">04</div><div class="wf-body"><div class="wf-title">Research Parts</div><div class="wf-desc">Fitment. Stock. Today's price. Three confirmations, every time.</div></div></div>
-            <div class="wf-step"><div class="wf-num">05</div><div class="wf-body"><div class="wf-title">Enter into Job Card</div><div class="wf-desc">Parts and labor onto the ARI job card. Accuracy here pays you directly.</div></div></div>
-            <div class="wf-step"><div class="wf-num">06</div><div class="wf-body"><div class="wf-title">Call the Front Office</div><div class="wf-desc">Give them the details. They take it from here. Wait for approval before opening tools.</div></div></div>
-            <div class="wf-step"><div class="wf-num">07</div><div class="wf-body"><div class="wf-title">Front Office Closes the Sale</div><div class="wf-desc">Customer approves. Deposit and Parts Recon fee collected. Digital signature captured.</div></div></div>
-            <div class="wf-step"><div class="wf-num">08</div><div class="wf-body"><div class="wf-title">Roll to the Next Job</div><div class="wf-desc">You're free. The job is on the schedule. Return when parts land.</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="1" onclick="openWorkflowStep('tech',1)"><div class="wf-num">01</div><div class="wf-body"><div class="wf-title">Get to the Job</div><div class="wf-desc">Arrive on time. Park safely. Greet the customer. Smile.</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="2" onclick="openWorkflowStep('tech',2)"><div class="wf-num">02</div><div class="wf-body"><div class="wf-title">Inspect in ARI</div><div class="wf-desc">Run the inspection template. Photograph everything. Don't skip steps.</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="3" onclick="openWorkflowStep('tech',3)"><div class="wf-num">03</div><div class="wf-body"><div class="wf-title">Run the Diagnostic</div><div class="wf-desc">Confirm the complaint. Isolate the cause. Write down what you find.</div><div class="wf-tag">Internal: diagnostic · Customer: Parts Recon Mission</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="4" onclick="openWorkflowStep('tech',4)"><div class="wf-num">04</div><div class="wf-body"><div class="wf-title">Research Parts</div><div class="wf-desc">Fitment. Stock. Today's price. Three confirmations, every time.</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="5" onclick="openWorkflowStep('tech',5)"><div class="wf-num">05</div><div class="wf-body"><div class="wf-title">Enter into Job Card</div><div class="wf-desc">Parts and labor onto the ARI job card. Accuracy here pays you directly.</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="6" onclick="openWorkflowStep('tech',6)"><div class="wf-num">06</div><div class="wf-body"><div class="wf-title">Call the Front Office</div><div class="wf-desc">Give them the details. They take it from here. Wait for approval before opening tools.</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="7" onclick="openWorkflowStep('tech',7)"><div class="wf-num">07</div><div class="wf-body"><div class="wf-title">Front Office Closes the Sale</div><div class="wf-desc">Customer approves. Deposit and Parts Recon fee collected. Digital signature captured.</div></div></div>
+            <div class="wf-step" data-role="tech" data-step="8" onclick="openWorkflowStep('tech',8)"><div class="wf-num">08</div><div class="wf-body"><div class="wf-title">Roll to the Next Job</div><div class="wf-desc">You're free. The job is on the schedule. Return when parts land.</div></div></div>
           </div>
           <div class="wf-lifeline"><div class="lifeline-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.21.34 2 .57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="lifeline-text"><div class="t">When in doubt — call the Front Office.</div><div class="s">We've got your back. Always.</div></div></div>
         </div>
         <div id="wf-sa" style="display: none;">
           <div class="wf-steps">
-            <div class="wf-step"><div class="wf-num">01</div><div class="wf-body"><div class="wf-title">Receive the Inbound</div><div class="wf-desc">Answer warmly. Get their name, platform, and what's wrong. Listen first.</div></div></div>
-            <div class="wf-step"><div class="wf-num">02</div><div class="wf-body"><div class="wf-title">Book in OctopusPro</div><div class="wf-desc">Schedule the window. Confirm address, VIN, and contact. Quote the Parts Recon fee.</div></div></div>
-            <div class="wf-step"><div class="wf-num">03</div><div class="wf-body"><div class="wf-title">Tag the Tech in Notes</div><div class="wf-desc">Brief them on anything the customer flagged. Techs get tagged in notes — nothing is "sent."</div></div></div>
-            <div class="wf-step active"><div class="wf-num">04</div><div class="wf-body"><div class="wf-title">Tech's Call Comes In</div><div class="wf-desc">Listen. Repeat findings back. Confirm parts, labor hours, and total.</div></div></div>
-            <div class="wf-step"><div class="wf-num">05</div><div class="wf-body"><div class="wf-title">Call the Customer. Sell the Job.</div><div class="wf-desc">Walk through the Parts Recon findings. Present the estimate. Answer every question.</div></div></div>
-            <div class="wf-step"><div class="wf-num">06</div><div class="wf-body"><div class="wf-title">Collect Deposit & Signature</div><div class="wf-desc">Parts deposit + Parts Recon fee. Digital signature required before any work begins. $250 floor applies.</div></div></div>
-            <div class="wf-step"><div class="wf-num">07</div><div class="wf-body"><div class="wf-title">Confirm with Tech</div><div class="wf-desc">Green-light the job or release the tech to the next appointment.</div></div></div>
-            <div class="wf-step"><div class="wf-num">08</div><div class="wf-body"><div class="wf-title">Update OctopusPro · Accurately</div><div class="wf-desc">Invoice accuracy is what drives your personal revenue. Every line item. Every time.</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="1" onclick="openWorkflowStep('sa',1)"><div class="wf-num">01</div><div class="wf-body"><div class="wf-title">Receive the Inbound</div><div class="wf-desc">Answer warmly. Get their name, platform, and what's wrong. Listen first.</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="2" onclick="openWorkflowStep('sa',2)"><div class="wf-num">02</div><div class="wf-body"><div class="wf-title">Book in OctopusPro</div><div class="wf-desc">Schedule the window. Confirm address, VIN, and contact. Quote the Parts Recon fee.</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="3" onclick="openWorkflowStep('sa',3)"><div class="wf-num">03</div><div class="wf-body"><div class="wf-title">Tag the Tech in Notes</div><div class="wf-desc">Brief them on anything the customer flagged. Techs get tagged in notes — nothing is "sent."</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="4" onclick="openWorkflowStep('sa',4)"><div class="wf-num">04</div><div class="wf-body"><div class="wf-title">Tech's Call Comes In</div><div class="wf-desc">Listen. Repeat findings back. Confirm parts, labor hours, and total.</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="5" onclick="openWorkflowStep('sa',5)"><div class="wf-num">05</div><div class="wf-body"><div class="wf-title">Call the Customer. Sell the Job.</div><div class="wf-desc">Walk through the Parts Recon findings. Present the estimate. Answer every question.</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="6" onclick="openWorkflowStep('sa',6)"><div class="wf-num">06</div><div class="wf-body"><div class="wf-title">Collect Deposit & Signature</div><div class="wf-desc">Parts deposit + Parts Recon fee. Digital signature required before any work begins. $250 floor applies.</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="7" onclick="openWorkflowStep('sa',7)"><div class="wf-num">07</div><div class="wf-body"><div class="wf-title">Confirm with Tech</div><div class="wf-desc">Green-light the job or release the tech to the next appointment.</div></div></div>
+            <div class="wf-step" data-role="sa" data-step="8" onclick="openWorkflowStep('sa',8)"><div class="wf-num">08</div><div class="wf-body"><div class="wf-title">Update OctopusPro · Accurately</div><div class="wf-desc">Invoice accuracy is what drives your personal revenue. Every line item. Every time.</div></div></div>
           </div>
           <div class="wf-lifeline"><div class="lifeline-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.21.34 2 .57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="lifeline-text"><div class="t">When in doubt — loop in Kayce.</div><div class="s">We solve it together. Always.</div></div></div>
         </div>
@@ -903,18 +993,20 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
       <div class="tab-panel" id="wf-diag">
         <div style="margin-bottom: 18px;"><h2 style="font-size: 20px; font-weight: 600; margin-bottom: 4px;">Diagnostic</h2><p style="font-size: 13px; color: var(--text-2);">Pick a symptom category to start.</p></div>
         <div class="diag-grid">
-          <button class="diag-tile"><div class="diag-icon"><svg viewBox="0 0 24 24"><path d="M13 2 L4 14 H12 L11 22 L20 10 H12 Z"/></svg></div><div class="diag-name">Won't Start</div></button>
-          <button class="diag-tile"><div class="diag-icon"><svg viewBox="0 0 24 24"><path d="M2 12 C5 6 9 18 13 12 C16 6 20 18 23 12" transform="translate(-1,0)"/></svg></div><div class="diag-name">Runs Poorly</div></button>
-          <button class="diag-tile"><div class="diag-icon"><svg viewBox="0 0 24 24"><path d="M12 2 L3 20 H21 Z M12 10 V14 M12 17 V17.5"/></svg></div><div class="diag-name">Electrical</div></button>
-          <button class="diag-tile"><div class="diag-icon"><svg viewBox="0 0 24 24"><path d="M7 2 V8 L4 11 V22 H20 V11 L17 8 V2 M9 14 V18 M15 14 V18"/></svg></div><div class="diag-name">Fuel</div></button>
-          <button class="diag-tile"><div class="diag-icon"><svg viewBox="0 0 24 24"><path d="M12 4 V20 M7 8 L12 4 L17 8 M7 16 L12 20 L17 16"/></svg></div><div class="diag-name">Cooling</div></button>
-          <button class="diag-tile"><div class="diag-icon"><svg viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17 H3 V12 L6 6 H15 L19 11 V17 H15 M9 17 H15"/></svg></div><div class="diag-name">Drive</div></button>
+          <button class="diag-tile-v33" onclick="openDiagPanel('wont-start')"><div class="dt-icon"><svg viewBox="0 0 24 24"><path d="M13 2 L4 14 H12 L11 22 L20 10 H12 Z"/></svg></div><div class="dt-name">Won't Start</div></button>
+          <button class="diag-tile-v33" onclick="openDiagPanel('runs-poorly')"><div class="dt-icon"><svg viewBox="0 0 24 24"><path d="M2 12 C5 6 9 18 13 12 C16 6 20 18 23 12" transform="translate(-1,0)"/></svg></div><div class="dt-name">Runs Poorly</div></button>
+          <button class="diag-tile-v33" onclick="openDiagPanel('voltage')"><div class="dt-icon"><svg viewBox="0 0 24 24"><path d="M13 2 L4 14 H12 L11 22 L20 10 H12 Z"/></svg></div><div class="dt-name">Voltage References</div></button>
+          <button class="diag-tile-v33" onclick="openDiagPanel('fuel')"><div class="dt-icon"><svg viewBox="0 0 24 24"><path d="M7 2 V8 L4 11 V22 H20 V11 L17 8 V2 M9 14 V18 M15 14 V18"/></svg></div><div class="dt-name">Fuel</div></button>
+          <button class="diag-tile-v33" onclick="openDiagPanel('cooling')"><div class="dt-icon"><svg viewBox="0 0 24 24"><path d="M12 4 V20 M7 8 L12 4 L17 8 M7 16 L12 20 L17 16"/></svg></div><div class="dt-name">Cooling</div></button>
+          <button class="diag-tile-v33" onclick="openDiagPanel('chain-belt')"><div class="dt-icon"><svg viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17 H3 V12 L6 6 H15 L19 11 V17 H15 M9 17 H15"/></svg></div><div class="dt-name">Chain / Belt</div></button>
         </div>
-        <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 8px;">Recent</div>
-        <div class="empty-state" style="padding: 20px;"><div class="empty-desc">No diagnostics logged yet. Start one above.</div></div>
+        <div class="ext-cards">
+          <button class="ext-card" onclick="openExt('cyclepedia')"><div class="ec-mark">CP</div><div class="ec-body"><div class="ec-title">Cyclepedia</div><div class="ec-sub">Service manual library · web.cyclepedia.com</div></div><div class="ec-arrow">↗</div></button>
+          <button class="ext-card disabled" onclick="return false;"><div class="ec-mark">CO</div><div class="ec-body"><div class="ec-title">Coleman Reference</div><div class="ec-sub">Reference data coming when warranty service center goes live.</div></div><div class="ec-arrow">↗</div></button>
+        </div>
       </div>
       <div class="tab-panel" id="wf-ref">
-        <div class="search-box"><span class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20 L16 16"/></svg></span><input type="text" placeholder="Torque, capacity, fitment, part #…"></div>
+        <div class="search-box"><span class="search-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20 L16 16"/></svg></span><input type="text" id="wf-ref-search" placeholder="Torque, capacity, fitment, part #…"></div>
         <div class="ref-chips"><button class="ref-chip active">All</button><button class="ref-chip">Torque</button><button class="ref-chip">Fluids</button><button class="ref-chip">Fitment</button><button class="ref-chip">Known Issues</button></div>
         <div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">Reference data loading</div><div class="empty-desc">Service manual specs, torque values, and known issues will populate here once content files are uploaded.</div></div>
       </div>
@@ -1933,6 +2025,45 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     <button class="btn ghost" style="margin-top:8px;" onclick="closePanel()">Cancel</button>
   </div>
 
+  <!-- v33: Diagnostic flow panel (universal chrome for all 6 diagnostic tiles) -->
+  <div class="slide-panel" id="diag-panel">
+    <div class="panel-handle"></div>
+    <div class="diag-panel-head">
+      <div class="dph-title" id="diag-panel-title">—</div>
+    </div>
+    <div class="make-bar">
+      <div class="make-bar-label">Make</div>
+      <button class="make-chip" onclick="openMakePicker()"><span id="diag-panel-make">Honda</span><span class="make-chip-change">Change</span></button>
+    </div>
+    <div id="diag-panel-body"></div>
+    <div class="diag-actions">
+      <button class="diag-action-btn primary" onclick="prefillQuickRef()"><span>Browse Quick Ref →</span><span class="da-arrow">↗</span></button>
+      <button class="diag-action-btn" onclick="openExt('ari')"><span>Open ARI</span><span class="da-arrow">↗</span></button>
+      <button class="diag-action-btn" onclick="openExt('octopus')"><span>Open OctopusPro</span><span class="da-arrow">↗</span></button>
+    </div>
+  </div>
+
+  <!-- v33: Workflow step panel (universal chrome for all 16 step tiles) -->
+  <div class="slide-panel" id="wfstep-panel">
+    <div class="panel-handle"></div>
+    <div class="diag-panel-head">
+      <div class="dph-make" id="wfstep-panel-num">STEP 01</div>
+      <div class="dph-title" id="wfstep-panel-title">—</div>
+    </div>
+    <div class="wfp-reframe" id="wfstep-panel-reframe">—</div>
+    <div class="wfp-reminders" id="wfstep-panel-reminders"></div>
+    <div id="wfstep-panel-easy"></div>
+    <div id="wfstep-panel-crosslink"></div>
+  </div>
+
+  <!-- v33: Make picker panel -->
+  <div class="slide-panel" id="makepicker-panel">
+    <div class="panel-handle"></div>
+    <div class="panel-title">Pick a make</div>
+    <div style="font-size:12px;color:var(--text-3);margin-bottom:14px;line-height:1.5;">Make persists across app close until you change it.</div>
+    <div class="make-picker" id="makepicker-grid"></div>
+  </div>
+
   <!-- Add Team Member Panel -->
   <div class="slide-panel" id="addtech-panel">
     <div class="panel-handle"></div>
@@ -2006,14 +2137,41 @@ function goTo(name) {
   if (name === 'sa-home') renderSAHome();
   if (name === 'admin') renderAdmin();
   if (name === 'admin-cc') { ccLoadBills(); renderCCAll(); }
+  // v33: when tech-field opens, position the sliding tab indicator and re-apply gold workflow bookmark.
+  if (name === 'tech-field') {
+    setTimeout(() => {
+      const activeBtn = document.querySelector('#wf-tabs-bar .tab-btn.active');
+      if (activeBtn) switchTab(activeBtn, activeBtn.dataset.tab);
+      if (typeof applyWfBookmark === 'function') {
+        const techVisible = document.querySelector('#wf-tech');
+        const role = (techVisible && techVisible.style.display === 'none') ? 'sa' : 'tech';
+        applyWfBookmark(role);
+      }
+    }, 30);
+  }
   // Training screens use standalone PWAs — no inline mounting needed
 }
 
 // TABS
+// v33: switchTab positions the sliding gold indicator and writes the tab-context line.
+const FH_TAB_CONTEXTS = {
+  'wf-workflow': 'Where you are right now in the job',
+  'wf-diag': 'Pick a symptom; pull the make-specific playbook',
+  'wf-ref': 'Search torque, capacity, fitment, part numbers'
+};
 function switchTab(btn, panelId) {
   btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
   document.querySelectorAll('#wf-workflow, #wf-diag, #wf-ref').forEach(p => p.classList.remove('active'));
   document.getElementById(panelId).classList.add('active');
+  const indicator = document.getElementById('wf-tab-indicator');
+  const ctx = document.getElementById('wf-tab-context');
+  if (indicator && btn) {
+    const parent = btn.parentElement;
+    const left = btn.offsetLeft - parent.scrollLeft;
+    indicator.style.width = btn.offsetWidth + 'px';
+    indicator.style.transform = 'translateX(' + left + 'px)';
+  }
+  if (ctx) ctx.textContent = FH_TAB_CONTEXTS[panelId] || '';
 }
 function switchAdminTab(btn, panelId) {
   // Render CC command on switch
@@ -2029,6 +2187,7 @@ function switchWfRole(btn, role) {
   btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active')); btn.classList.add('active');
   document.getElementById('wf-tech').style.display = role === 'tech' ? 'block' : 'none';
   document.getElementById('wf-sa').style.display = role === 'sa' ? 'block' : 'none';
+  if (typeof applyWfBookmark === 'function') applyWfBookmark(role);
 }
 
 // PANELS
@@ -3712,6 +3871,938 @@ function deleteAffirmation(id) {
 
 // Legacy clearAffirmation kept for backward compat
 function clearAffirmation(idx) { renderAffirmations(); }
+
+</script>
+
+<!-- v33: diagnostic flows, voltage references, workflow step panels, make selector, sliding tab indicator -->
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   v33 ADDITIONS · diagnostic flows, voltage references, workflow steps
+   Make selector, persistence, sliding tab indicator wiring,
+   external app deeplinks, glove-friendly tap targets.
+   Content for all 5 diagnostic flows × 8 makes, voltage spec card × 8 makes,
+   and 16 workflow step panels was approved verbatim in v33 content preview
+   and is fixed in this build.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+const FH_MAKES = [
+  { id: 'honda',   name: 'Honda',          sub: 'Live' },
+  { id: 'yamaha',  name: 'Yamaha',         sub: 'Live' },
+  { id: 'kawasaki',name: 'Kawasaki',       sub: 'Live' },
+  { id: 'suzuki',  name: 'Suzuki',         sub: 'Live' },
+  { id: 'harley',  name: 'Harley-Davidson',sub: 'Live' },
+  { id: 'indian',  name: 'Indian',         sub: 'Live' },
+  { id: 'ktm',     name: 'KTM',            sub: 'Live' },
+  { id: 'polaris', name: 'Polaris',        sub: 'Live' },
+  { id: 'coleman', name: 'Coleman',        sub: 'Coming with WSC', disabled: true }
+];
+
+function fhMakeName(id) {
+  const m = FH_MAKES.find(x => x.id === id);
+  return m ? m.name : 'Honda';
+}
+
+function fhGetMake() {
+  try {
+    const v = localStorage.getItem('fh-make');
+    if (v && FH_MAKES.find(x => x.id === v && !x.disabled)) return v;
+  } catch (e) {}
+  return 'honda';
+}
+
+function fhSetMake(id) {
+  try { localStorage.setItem('fh-make', id); } catch (e) {}
+  // Re-render any currently-open diag panel
+  const dp = document.getElementById('diag-panel');
+  if (dp && dp.classList.contains('open')) {
+    const sym = dp.dataset.symptom;
+    if (sym) renderDiagPanel(sym);
+  }
+}
+
+/* ─── DIAGNOSTIC CONTENT (5 flows × 8 makes) ─────────────────────────── */
+
+const DIAG_DATA = {
+  'wont-start': {
+    title: "Won't Start",
+    firstChecks: [
+      "Kill switch off. Sidestand up. Clutch in. Neutral or interlock satisfied.",
+      "Battery 12.6V at rest. Above 9.5V while cranking.",
+      "Fuel petcock on (carb'd). Fresh fuel in tank.",
+      "Main fuse continuity. Ignition fuse if separate.",
+      "Key fob battery (smart-key bikes)."
+    ],
+    branches: [
+      { ifText: "Cranks, won't fire", thenText: "Spark at the plug, fuel at the injector / carb, compression." },
+      { ifText: "No crank", thenText: "Battery loaded test, start button continuity, solenoid click, interlock continuity." },
+      { ifText: "Cranks slow", thenText: "Battery loaded test, main ground, starter brushes." }
+    ],
+    common: {
+      honda: [
+        "<strong>VFR800</strong> — regulator/rectifier failure. Stator can take it down too.",
+        "<strong>Shadow VT750</strong> — sidestand switch corrosion. Intermittent no-start.",
+        "<strong>Goldwing GL1500</strong> — vacuum petcock diaphragm tears. Fuel starvation.",
+        "<strong>CBR600F4i</strong> — fuel pump relay click of death.",
+        "<strong>Rebel 250</strong> — clogged carb pilot jet after sitting."
+      ],
+      yamaha: [
+        "<strong>R6 / R1</strong> — bank angle sensor latches after a tip-over. Cycle the key, wait 10 seconds.",
+        "<strong>V-Star 1100</strong> — sidestand switch corrosion.",
+        "<strong>FZ-09 / MT-09 (early)</strong> — fuel pump relay.",
+        "<strong>Vmax</strong> — vacuum petcock diaphragm.",
+        "<strong>WR250R</strong> — TPS faults trip no-start condition."
+      ],
+      kawasaki: [
+        "<strong>ZX-6R / ZX-10R</strong> — bank angle sensor latch.",
+        "<strong>Vulcan 1500 / 1600</strong> — sidestand switch corrosion.",
+        "<strong>KLR650 (Gen 1)</strong> — stator failure 30k+.",
+        "<strong>Concours C14</strong> — fuel pump cradle and relay.",
+        "<strong>Ninja 250 / 300</strong> — clogged pilot circuits after sitting."
+      ],
+      suzuki: [
+        "<strong>SV650 (03&ndash;15)</strong> — sidestand switch corrosion. Notorious. Bypass to confirm, then replace.",
+        "<strong>DR650</strong> — petcock vacuum diaphragm. Starves at idle.",
+        "<strong>V-Strom 650</strong> — bank angle sensor latches.",
+        "<strong>GSX-R 600 / 750</strong> — fuel pump relay.",
+        "<strong>Hayabusa</strong> — clutch interlock switch."
+      ],
+      harley: [
+        "<strong>Twin Cam Touring</strong> — battery cable corrosion at the post. Pull, clean, dielectric grease.",
+        "<strong>M8</strong> — security system / ignition switch faults.",
+        "<strong>Sportster (older)</strong> — stator failure. Hot start sluggish.",
+        "<strong>All later models</strong> — clutch interlock switch.",
+        "<strong>Touring</strong> — TSSM (turn signal / security module) faults."
+      ],
+      indian: [
+        "<strong>Scout (15&ndash;17)</strong> — fuel pump relay.",
+        "<strong>Chief / Chieftain</strong> — battery posts, fob antenna under tank.",
+        "<strong>FTR1200</strong> — bank angle sensor."
+      ],
+      ktm: [
+        "<strong>Most models</strong> — sidestand switch corrosion. Confirm with bypass.",
+        "<strong>690 / 790 / 890</strong> — fuel pump in-tank failure.",
+        "<strong>RC8 / Super Duke</strong> — slipper clutch limit switch.",
+        "<strong>Adventure 1190 / 1290</strong> — undersized factory battery dies easy."
+      ],
+      polaris: [
+        "<strong>Slingshot</strong> — battery / charging fault, alternator belt slip on certain years.",
+        "<strong>Indian-branded cruisers</strong> — see Indian."
+      ],
+      coleman: []
+    }
+  },
+
+  'runs-poorly': {
+    title: "Runs Poorly",
+    firstChecks: [
+      "Plug condition. Color, gap, tip wash. Foul = fuel issue. White = lean.",
+      "Air filter. Look and smell. Mud-dauber wasps in stored bikes.",
+      "Fuel age. Over 60 days = drain or run out.",
+      "Vacuum lines. Cracks, off the nipple, kinked.",
+      "Coolant level if liquid-cooled. Overheat trims fuel.",
+      "Battery voltage at idle. Marginal battery skews EFI."
+    ],
+    branches: [
+      { ifText: "Lean (popping on decel, hangs at idle)", thenText: "Vacuum leak, fuel delivery, intake boots." },
+      { ifText: "Rich (black smoke, wet plug)", thenText: "Choke stuck, float bowl, dirty injector, bad MAP/MAF." },
+      { ifText: "Misfire one cylinder", thenText: "Coil, plug wire, plug, low compression on that cyl." },
+      { ifText: "Loses power above an RPM threshold", thenText: "Fuel filter, pump pressure, intake restriction, exhaust restriction." }
+    ],
+    common: {
+      honda: [
+        "<strong>VFR800</strong> — gear position sensor faults skew fueling.",
+        "<strong>CBR600F4i</strong> — pilot circuits clog after sitting.",
+        "<strong>Goldwing</strong> — TPS drift. Reset with the diagnostic procedure.",
+        "<strong>Shadow</strong> — air / fuel mix screws backed out or in too far."
+      ],
+      yamaha: [
+        "<strong>R6</strong> — clogged jets after winter. Pull bowls.",
+        "<strong>WR250R</strong> — emissions canister waterlogged from poor venting.",
+        "<strong>Bolt</strong> — slip-out diaphragm in the petcock.",
+        "<strong>FZ1</strong> — TPS issues, especially Gen 1."
+      ],
+      kawasaki: [
+        "<strong>KLR650</strong> — doohickey (counterbalancer chain tensioner). Catastrophic if missed.",
+        "<strong>Ninja 250 / 300</strong> — pilot jets after sitting.",
+        "<strong>Vulcan</strong> — vacuum CV carb diaphragm tears.",
+        "<strong>ZX bikes</strong> — secondary throttle valve actuator stuck."
+      ],
+      suzuki: [
+        "<strong>DRZ400</strong> — petcock vacuum line cracks. Fuel slosh into airbox.",
+        "<strong>SV650</strong> — old plugs and overdue valve adjustment. Symptoms read like fueling.",
+        "<strong>GSX-R</strong> — clogged injectors after long sit. Top-tier ethanol-free if available.",
+        "<strong>Hayabusa</strong> — STV (secondary throttle) actuator on early bikes."
+      ],
+      harley: [
+        "<strong>Twin Cam</strong> — cam chain tensioner failure. Watch for metal in oil. Catastrophic if missed.",
+        "<strong>M8</strong> — knock sensor faults skew timing.",
+        "<strong>Sportster</strong> — leaky exhaust gaskets pull lean. Check the pipe-to-head joint.",
+        "<strong>Touring</strong> — fuel pump pressure drops with age."
+      ],
+      indian: [
+        "<strong>Chief</strong> — early fueling tune. Post-2017 ECU updates resolve most.",
+        "<strong>Scout</strong> — exhaust gasket leaks lean out front cylinder."
+      ],
+      ktm: [
+        "<strong>690 / 790</strong> — fuel pump screen clogs. Drop the tank.",
+        "<strong>Adventure (US bikes)</strong> — emissions canister. Saturates and runs rich.",
+        "<strong>1290</strong> — coolant temp sensor drift."
+      ],
+      polaris: [
+        "<strong>Slingshot</strong> — flex-fuel sensor faults skew the trim."
+      ],
+      coleman: []
+    }
+  },
+
+  'fuel': {
+    title: "Fuel",
+    firstChecks: [
+      "Fresh fuel within 60 days.",
+      "Petcock on (carb'd). Pull the line at the carb and confirm flow.",
+      "Tank vent clear. Pull the cap and listen for vacuum release.",
+      "Fuel filter — visible debris, sediment.",
+      "Fuel pump prime sound at key-on (EFI). 2&ndash;3 seconds, then shutoff.",
+      "Fuel pressure at the rail (EFI). Spec is in the Voltage References tile per make."
+    ],
+    branches: [
+      { ifText: "No fuel at all", thenText: "Tank vent, petcock, fuel pump fuse, pump itself." },
+      { ifText: "Fuel but won't run", thenText: "Pressure low (under 30 PSI EFI), injector pulse, carb pilot circuit." },
+      { ifText: "Runs only on choke", thenText: "Pilot jet plugged, low fuel level in bowl, vacuum leak." },
+      { ifText: "Floods after sitting", thenText: "Float valve, float height, sticky needle." }
+    ],
+    common: {
+      honda: [
+        "<strong>Most carb'd Hondas</strong> — pilot jets clog after sitting six months.",
+        "<strong>Goldwing</strong> — vacuum petcock diaphragm.",
+        "<strong>VFR800</strong> — fuel pump fitting corrosion under the tank.",
+        "<strong>Shadow</strong> — float bowl screws strip if previous tech overtorqued."
+      ],
+      yamaha: [
+        "<strong>Vmax / Bolt</strong> — vacuum petcock diaphragm.",
+        "<strong>WR250R</strong> — emissions canister fuel slosh.",
+        "<strong>R6 / R1</strong> — fuel pump module gasket leak after tank R&amp;R."
+      ],
+      kawasaki: [
+        "<strong>Vulcan</strong> — petcock diaphragm. Common.",
+        "<strong>KLR650</strong> — petcock vacuum line cracks.",
+        "<strong>Ninja</strong> — fuel pump in-tank bracket cracks on high-mile bikes."
+      ],
+      suzuki: [
+        "<strong>DR650 / V-Strom 650</strong> — petcock vacuum diaphragm. Very common.",
+        "<strong>SV650</strong> — fuel pump pressure regulator.",
+        "<strong>GSX-R</strong> — fuel pump in-tank bracket."
+      ],
+      harley: [
+        "<strong>Sportster carb era</strong> — slow speed circuit clogs.",
+        "<strong>M8</strong> — fuel pump module gasket weep.",
+        "<strong>Twin Cam EFI</strong> — fuel pump pressure drops with age. Spec 55&ndash;62 PSI Touring.",
+        "<strong>Touring</strong> — quick disconnect at the tank weeps."
+      ],
+      indian: [
+        "<strong>Scout</strong> — fuel pump in-tank module.",
+        "<strong>Chief</strong> — fuel pressure regulator on Thunderstroke."
+      ],
+      ktm: [
+        "<strong>690 / 790 / 890</strong> — fuel pump in-tank failure. Notorious.",
+        "<strong>1190 / 1290 Adventure</strong> — fuel pump bracket cracks."
+      ],
+      polaris: [
+        "<strong>Slingshot</strong> — fuel pump assembly failures common years 15&ndash;17."
+      ],
+      coleman: []
+    }
+  },
+
+  'cooling': {
+    title: "Cooling",
+    firstChecks: [
+      "Coolant level cold. Overflow tank and the radiator cap.",
+      "Coolant condition. Brown or muddy = overdue, possible head gasket.",
+      "Fan operation. Bridge the switch with key on, fan should run.",
+      "Radiator inlet vs outlet temp delta at operating temp. 10&ndash;20 &deg;F typical.",
+      "Radiator core damage, debris, bent fins.",
+      "Cap tested or swapped. Bad cap mimics half the failures on this list."
+    ],
+    branches: [
+      { ifText: "Overheats in traffic", thenText: "Fan switch, fan motor, low coolant." },
+      { ifText: "Overheats at speed", thenText: "Thermostat stuck, water pump impeller, blocked radiator." },
+      { ifText: "Coolant disappears, no leak visible", thenText: "Head gasket, water pump weep, internal." },
+      { ifText: "Steam from overflow", thenText: "Cap not holding pressure, head gasket." }
+    ],
+    common: {
+      honda: [
+        "<strong>VFR800</strong> — fan switch failure first, then radiator.",
+        "<strong>Shadow</strong> — radiator fan motor seizes.",
+        "<strong>Goldwing</strong> — coolant overflow tank cracks."
+      ],
+      yamaha: [
+        "<strong>R1 / R6</strong> — radiator damage from rocks. Common.",
+        "<strong>Vmax</strong> — fan switch.",
+        "<strong>WR250R</strong> — radiator core damage offroad."
+      ],
+      kawasaki: [
+        "<strong>ZX-6R / ZX-10R</strong> — fan switch.",
+        "<strong>Concours</strong> — coolant pump seal weep onto the front sprocket area."
+      ],
+      suzuki: [
+        "<strong>GSX-R / Hayabusa</strong> — fan switch.",
+        "<strong>V-Strom</strong> — head gasket weep on high-mile bikes."
+      ],
+      harley: [
+        "<strong>Twin Cooled Touring</strong> — coolant level warning common. Verify before chasing harder.",
+        "<strong>M8</strong> — minimal liquid cooling, mostly oil cooler."
+      ],
+      indian: [
+        "<strong>Chief</strong> — minimal cooling system, mostly air-cooled.",
+        "<strong>FTR1200</strong> — radiator cap pressure."
+      ],
+      ktm: [
+        "<strong>690 / 790 / 890</strong> — radiator cap pressure first, then fan switch.",
+        "<strong>Adventure</strong> — coolant pump seal leak."
+      ],
+      polaris: [
+        "<strong>Slingshot</strong> — radiator and fan issues common for the year."
+      ],
+      coleman: []
+    }
+  },
+
+  'chain-belt': {
+    title: "Chain / Belt",
+    firstChecks: [
+      "Slack at midpoint between sprockets, bike off the stand. Spec is model-dependent. 25&ndash;35 mm typical for chains.",
+      "Sprocket teeth shape. Hooked or shark-finned = replace pair.",
+      "Master link clip orientation. Open end trailing direction of travel.",
+      "Belt deflection cold, midpoint between pulleys. 3/8\" at 10 lbs typical for HD.",
+      "Pulley teeth and belt teeth integrity.",
+      "Axle alignment marks both sides match."
+    ],
+    branches: [
+      { ifText: "Excessive slack", thenText: "Adjuster, axle alignment, worn rear sprocket." },
+      { ifText: "Tight spots in rotation", thenText: "Kinked chain, bent sprocket." },
+      { ifText: "Belt cracked or frayed", thenText: "Replace, inspect debris guards and pulley." },
+      { ifText: "Belt tracking off-center", thenText: "Axle alignment, pulley wear." }
+    ],
+    common: {
+      honda: [
+        "<strong>Most chain models</strong> — adjuster slack, sprocket wear at high mileage.",
+        "<strong>VFR800</strong> — chain wear on commuter bikes.",
+        "<strong>Most Goldwings, ST1300, NT700</strong> — shaft drive. Note in the panel."
+      ],
+      yamaha: [
+        "<strong>R6 / R1</strong> — chain stretch from aggressive riding.",
+        "<strong>Bolt</strong> — belt drive, watch tracking.",
+        "<strong>FJR1300</strong> — shaft drive, U-joint wear instead."
+      ],
+      kawasaki: [
+        "<strong>Ninja series</strong> — chain wear.",
+        "<strong>Vulcan 900 / 1500</strong> — belt drive, tension and tracking.",
+        "<strong>Concours C14</strong> — shaft drive."
+      ],
+      suzuki: [
+        "<strong>GSX-R</strong> — chain wear from high RPM riding.",
+        "<strong>Boulevard line</strong> — belt or shaft depending on model. Verify before quoting."
+      ],
+      harley: [
+        "<strong>All belt drive</strong> — debris damage common. Inspect pulley guard.",
+        "<strong>Sportster</strong> — chain on early bikes, belt on later.",
+        "<strong>Touring</strong> — belt cracks at the teeth, pulley wear at high mileage."
+      ],
+      indian: [
+        "<strong>All belt drive</strong> — similar to HD wear pattern.",
+        "<strong>Chief</strong> — belt tension spec strict, worth a torque-on-axle reverify."
+      ],
+      ktm: [
+        "<strong>All chain.</strong> Wear is normal. Adventure with offroad use eats chains.",
+        "<strong>690 / 790</strong> — verify cush drive condition with chain wear."
+      ],
+      polaris: [
+        "<strong>Slingshot</strong> — rear belt drive. Tension and tracking."
+      ],
+      coleman: []
+    }
+  }
+};
+
+/* ─── VOLTAGE REFERENCES (spec card per make) ───────────────────────── */
+
+const VOLT_UNIVERSAL = [
+  { label: "BATTERY", rows: [
+    ["Rest", "12.6 V (below 12.4 V = sulfated or discharged)"],
+    ["Cranking", "&gt; 9.5 V (lead-acid threshold)"],
+    ["Charging", "13.5 &ndash; 14.8 V @ 3000&ndash;5000 RPM"],
+    ["Parasitic draw", "&lt; 3 mA key-off, alarm-off"]
+  ]},
+  { label: "TPS", rows: [
+    ["Closed throttle", "~ 0.5 V"],
+    ["Wide open", "~ 4.5 V (smooth sweep)"]
+  ]},
+  { label: "O2 SENSOR (NARROWBAND)", rows: [
+    ["Swing", "0.1 &ndash; 0.9 V at operating temp"]
+  ]},
+  { label: "ECT / COOLANT TEMP SENSOR", rows: [
+    ["Cold (~20 &deg;C)", "2.0 &ndash; 3.0 k&Omega;"],
+    ["Hot (~80 &deg;C)", "200 &ndash; 400 &Omega;"]
+  ]}
+];
+
+const VOLT_DATA = {
+  honda: [
+    { label: "STATOR (3-phase, AC, unloaded)", rows: [
+      ["CB / CBR singles", "18 &ndash; 25 VAC per 1000 RPM"],
+      ["Twins / fours", "60 &ndash; 80 VAC @ 5000 RPM each phase pair"]
+    ]},
+    { label: "R/R OUTPUT (DC)", rows: [
+      ["Running", "13.8 &ndash; 14.6 V @ 5000 RPM"],
+      ["Below 13 V", "R/R suspect"]
+    ]},
+    { label: "STARTER SOLENOID", rows: [
+      ["Coil resistance", "3 &ndash; 5 &Omega;"],
+      ["Trigger wire", "12 V at start button press"]
+    ]},
+    { label: "START BUTTON / INTERLOCKS", rows: [
+      ["Through clutch + neutral + kill", "12 V in / 12 V out"]
+    ]},
+    { label: "IGNITION COIL", rows: [
+      ["Primary", "0.5 &ndash; 2.0 &Omega;"],
+      ["Secondary (with cap)", "8 &ndash; 25 k&Omega;"],
+      ["Pickup / CKP", "100 &ndash; 500 &Omega; model-dependent"]
+    ]},
+    { label: "INJECTOR", rows: [["Coil resistance", "11 &ndash; 16 &Omega;"]]},
+    { label: "FAN SWITCH", rows: [["Closes / opens", "~98&ndash;105 &deg;C / ~90&ndash;95 &deg;C"]]},
+    { label: "FUEL PUMP", rows: [
+      ["Pressure", "36 &ndash; 50 PSI model-dependent"],
+      ["Current draw", "2 &ndash; 5 A running"]
+    ]},
+    { label: "BANK ANGLE SENSOR", rows: [["Output", "0 V flat / 4&ndash;5 V tipped"]]}
+  ],
+  yamaha: [
+    { label: "STATOR (3-phase, AC)", rows: [
+      ["Most models", "60 &ndash; 80 VAC @ 5000 RPM each pair"],
+      ["Vmax", "Higher output, see service manual"]
+    ]},
+    { label: "R/R OUTPUT", rows: [["Running", "13.8 &ndash; 14.5 V @ 5000 RPM"]]},
+    { label: "STARTER SOLENOID", rows: [["Coil resistance", "3.5 &ndash; 4.5 &Omega;"]]},
+    { label: "IGNITION COIL", rows: [
+      ["Primary", "1.5 &ndash; 2.5 &Omega;"],
+      ["Secondary", "10 &ndash; 14 k&Omega;"],
+      ["Pickup", "200 &ndash; 350 &Omega; typical"]
+    ]},
+    { label: "INJECTOR", rows: [["Coil resistance", "12 &ndash; 16 &Omega;"]]},
+    { label: "FAN SWITCH", rows: [["Closes / opens", "~105 &deg;C / ~100 &deg;C"]]},
+    { label: "FUEL PUMP", rows: [["Pressure", "36 &ndash; 50 PSI"]]}
+  ],
+  kawasaki: [
+    { label: "STATOR (3-phase, AC)", rows: [
+      ["Most models", "40 &ndash; 60 VAC @ 4000 RPM each pair"],
+      ["KLR650 Gen 1", "Weakest of the bunch &mdash; verify under load"]
+    ]},
+    { label: "R/R OUTPUT", rows: [["Running", "14.0 &ndash; 15.0 V @ 4000 RPM"]]},
+    { label: "STARTER SOLENOID", rows: [["Coil resistance", "3.5 &ndash; 5.0 &Omega;"]]},
+    { label: "IGNITION COIL", rows: [
+      ["Primary", "2.3 &ndash; 3.5 &Omega;"],
+      ["Secondary", "10 &ndash; 16 k&Omega;"],
+      ["Pickup", "380 &ndash; 580 &Omega; model-dependent"]
+    ]},
+    { label: "INJECTOR", rows: [["Coil resistance", "11 &ndash; 14 &Omega;"]]},
+    { label: "FAN SWITCH", rows: [["Closes / opens", "~100 &deg;C / ~95 &deg;C"]]}
+  ],
+  suzuki: [
+    { label: "STATOR (3-phase, AC)", rows: [
+      ["Most fours", "60 &ndash; 80 VAC @ 5000 RPM each pair"],
+      ["SV / DL twins", "40 &ndash; 60 VAC @ 5000 RPM each pair"]
+    ]},
+    { label: "R/R OUTPUT", rows: [
+      ["Running", "13.5 &ndash; 15.5 V @ 5000 RPM"],
+      ["Note", "Suzuki R/R failure is well documented; verify under load"]
+    ]},
+    { label: "STARTER SOLENOID", rows: [["Coil resistance", "3 &ndash; 6 &Omega;"]]},
+    { label: "IGNITION COIL", rows: [
+      ["Primary", "1 &ndash; 4 &Omega; model-dependent"],
+      ["Secondary", "20 &ndash; 30 k&Omega;"],
+      ["Pickup", "100 &ndash; 300 &Omega;"]
+    ]},
+    { label: "INJECTOR", rows: [["Coil resistance", "11 &ndash; 16 &Omega;"]]}
+  ],
+  harley: [
+    { label: "STATOR (3-phase, AC, unloaded)", rows: [
+      ["Sportster", "16 &ndash; 20 VAC per 1000 RPM"],
+      ["Twin Cam Touring", "19 &ndash; 26 VAC per 1000 RPM"],
+      ["M8", "Per service manual; broadly similar to TC"]
+    ]},
+    { label: "R/R OUTPUT (DC)", rows: [["Running", "13.2 &ndash; 15.0 V @ 3600 RPM"]]},
+    { label: "STATOR INSULATION", rows: [
+      ["Each leg to ground", "No continuity (&infin; &Omega;). Continuity = shorted stator."]
+    ]},
+    { label: "STARTER SOLENOID", rows: [
+      ["Coil resistance", "2.5 &ndash; 4.5 &Omega;"],
+      ["Trigger", "12 V at start button (through ECM later bikes)"]
+    ]},
+    { label: "IGNITION COIL", rows: [
+      ["Primary (TC and earlier)", "0.5 &ndash; 0.7 &Omega;"],
+      ["Secondary", "5.5 &ndash; 7.5 k&Omega;"]
+    ]},
+    { label: "CKP / CMP SENSOR", rows: [["Resistance", "~350 &ndash; 600 &Omega;"]]},
+    { label: "FUEL PUMP", rows: [
+      ["EFI Touring", "55 &ndash; 62 PSI"],
+      ["Sportster EFI", "49 &ndash; 55 PSI"]
+    ]},
+    { label: "TSSM / SECURITY (where applicable)", rows: [
+      ["Antenna circuit", "Per service manual &mdash; fault here = no-start with no codes"]
+    ]}
+  ],
+  indian: [
+    { label: "STATOR / R/R", rows: [
+      ["Note", "Verify with model service manual. Architecture similar to HD on Thunderstroke."]
+    ]},
+    { label: "R/R OUTPUT", rows: [["Running", "13.5 &ndash; 14.7 V"]]},
+    { label: "IGNITION COIL", rows: [
+      ["Primary", "0.4 &ndash; 0.8 &Omega;"],
+      ["Secondary", "5 &ndash; 9 k&Omega;"]
+    ]},
+    { label: "FUEL PUMP", rows: [["Pressure", "50 &ndash; 60 PSI"]]},
+    { label: "KEY FOB / SECURITY", rows: [
+      ["Antenna fault", "Under tank = no-start. Verify with service manual."]
+    ]}
+  ],
+  ktm: [
+    { label: "STATOR (singles and twins)", rows: [
+      ["Note", "Output varies widely by displacement. Verify with service manual."],
+      ["690 single", "~14 &ndash; 20 VAC per 1000 RPM"],
+      ["1290 V-twin", "~60 &ndash; 80 VAC @ 5000 RPM each pair"]
+    ]},
+    { label: "R/R OUTPUT", rows: [["Running", "13.5 &ndash; 14.8 V"]]},
+    { label: "IGNITION COIL", rows: [
+      ["Primary", "0.5 &ndash; 1.5 &Omega;"],
+      ["Secondary", "8 &ndash; 14 k&Omega;"]
+    ]},
+    { label: "INJECTOR", rows: [["Coil resistance", "~12 &Omega;"]]},
+    { label: "CKP", rows: [["Resistance", "~200 &ndash; 400 &Omega;"]]}
+  ],
+  polaris: [
+    { label: "SLINGSHOT", rows: [
+      ["Charging", "Automotive-style alternator + belt &mdash; verify belt before electrical"],
+      ["R/R / regulator output", "13.8 &ndash; 14.7 V running"],
+      ["Battery", "Automotive Group 35 typical"]
+    ]},
+    { label: "INDIAN-BRANDED MODELS", rows: [
+      ["See", "Indian table"]
+    ]}
+  ],
+  coleman: []
+};
+
+/* ─── WORKFLOW STEP CONTENT (16 panels) ──────────────────────────────── */
+
+const WF_STEPS = {
+  tech: [
+    null,
+    { title: "Get to the Job",
+      reframe: "Drive in, gather your gear, walk up. First impression matters.",
+      reminders: [
+        "Confirm the customer is there before pulling tools.",
+        "Park where you can work safely and load out fast.",
+        "Greet the bike too. A walk-around tells you half the story."
+      ]
+    },
+    { title: "Inspect in ARI",
+      reframe: "Run the full template, even when you \"know\" what's wrong.",
+      reminders: [
+        "Photograph every fault as you find it. The driveway is the only place you'll see it.",
+        "Don't skip mileage, VIN, or fluids check.",
+        "Ask before you start the bike."
+      ]
+    },
+    { title: "Run the Diagnostic",
+      reframe: "Confirm the complaint by reproducing it. Isolate the cause. Don't guess.",
+      reminders: [
+        "Plain-English notes on the job card. Front office reads this verbatim.",
+        "Photo every fault. Photos sell the job."
+      ],
+      crosslink: "Browse diagnostic library \u2192"
+    },
+    { title: "Research Parts",
+      reframe: "Fitment first. Stock second. Today's price third. Lock all three before quoting.",
+      reminders: [
+        "VIN-match every time. Year-make-model isn't enough on Hondas.",
+        "Don't quote off the top of your head. SA controls margin.",
+        "Forum-verified labor times. Book time is the floor, not the ceiling."
+      ]
+    },
+    { title: "Enter into Job Card",
+      reframe: "Parts and labor onto the ARI job card while it's fresh.",
+      reminders: [
+        "Three-hour labor minimum on every scheduled job.",
+        "Diagnostic and travel as their own line items.",
+        "Accuracy here pays you directly. Skip nothing."
+      ]
+    },
+    { title: "Call the Front Office",
+      reframe: "Walk them through findings, parts, and time. Wait for green light before tools come out.",
+      reminders: [
+        "If you can't reach the SA, leave a voice note and stand by.",
+        "If the customer is pressing you, hand them the SA's number.",
+        "Don't talk price."
+      ]
+    },
+    { title: "Front Office Closes the Sale",
+      reframe: "Customer approves. Deposit + Parts Recon fee land. Digital signature captured.",
+      reminders: [
+        "Stage your tools while you wait. Green light is permission to start.",
+        "No signature = no tools out. Chargeback protection.",
+        "$250 floor still applies."
+      ]
+    },
+    { title: "Roll to the Next Job",
+      reframe: "Confirm the job is on the schedule before you leave.",
+      reminders: [
+        "Return when parts land, not before.",
+        "Log mileage out before you pull off.",
+        "Customer thanks you the same way they greeted you."
+      ]
+    }
+  ],
+  sa: [
+    null,
+    { title: "Receive the Inbound",
+      reframe: "Answer warmly. Get name, bike, address, what's wrong. Listen first.",
+      reminders: [
+        "Don't quote anything yet.",
+        "$250 floor applies to every mobile call.",
+        "If they ask for a price up front, give the floor and explain Parts Recon."
+      ]
+    },
+    { title: "Book in OctopusPro",
+      reframe: "Schedule the window. Confirm address, VIN, contact number.",
+      reminders: [
+        "Quote the Parts Recon fee at booking. Set expectation now.",
+        "Three-hour labor minimum on every scheduled job.",
+        "Confirm the bike is accessible and a tech can reach it."
+      ]
+    },
+    { title: "Tag the Tech in Notes",
+      reframe: "Pre-brief: customer's symptoms, anything weird, history.",
+      reminders: [
+        "Notes are not \"sent.\" Tech reads when they pick up the job.",
+        "Photo from the customer if they've offered one.",
+        "Flag known traps (small driveway, dog, gate code)."
+      ]
+    },
+    { title: "Tech's Call Comes In",
+      reframe: "Stop what you're doing. The clock starts.",
+      reminders: [
+        "Repeat findings back to confirm.",
+        "Get parts list, labor hours, and total before you hang up.",
+        "Ask the tech what photos they captured."
+      ]
+    },
+    { title: "Call the Customer. Sell the Job.",
+      reframe: "Walk through Parts Recon findings in plain English.",
+      reminders: [
+        "Present the full estimate. Don't itemize every nut.",
+        "Answer every question. Silence at the end isn't the close.",
+        "Use the photos. They sell the job for you."
+      ]
+    },
+    { title: "Collect Deposit & Signature",
+      reframe: "Parts deposit + Parts Recon fee on the call. Both required.",
+      reminders: [
+        "Digital signature before any tools come out.",
+        "$250 floor still applies.",
+        "If they balk at signature, the job is not approved."
+      ]
+    },
+    { title: "Confirm with Tech",
+      reframe: "Green-light the job or release the tech to the next appointment.",
+      reminders: [
+        "Confirm parts ETA against the customer's window.",
+        "If parts slip, call the customer the same day.",
+        "Don't let the tech wait without an answer."
+      ]
+    },
+    { title: "Update OctopusPro \u00b7 Accurately",
+      reframe: "Every line item drives flag hours and your commission. Update the moment you hang up.",
+      reminders: [
+        "Inaccurate invoices cost the tech and you.",
+        "Reconcile parts lines against the parts tracker.",
+        "Close cleanly. The job's not done until OctopusPro reflects it."
+      ]
+    }
+  ]
+};
+
+/* ─── WORKFLOW STEP BOOKMARK PERSISTENCE ──────────────────────────────── */
+
+function fhGetWfBookmark(role) {
+  try {
+    const v = localStorage.getItem('fh-wf-bookmark-' + role);
+    if (v) return parseInt(v, 10) || null;
+  } catch (e) {}
+  return null;
+}
+
+function fhSetWfBookmark(role, step) {
+  try { localStorage.setItem('fh-wf-bookmark-' + role, String(step)); } catch (e) {}
+  applyWfBookmark(role);
+}
+
+function applyWfBookmark(role) {
+  const step = fhGetWfBookmark(role);
+  document.querySelectorAll('.wf-step[data-role="' + role + '"]').forEach(el => {
+    const s = parseInt(el.dataset.step, 10);
+    el.classList.toggle('gold-bookmark', s === step);
+  });
+}
+
+/* ─── WORKFLOW STEP PANEL ─────────────────────────────────────────────── */
+
+function openWorkflowStep(role, stepNum) {
+  const step = WF_STEPS[role] && WF_STEPS[role][stepNum];
+  if (!step) return;
+  const numEl   = document.getElementById('wfstep-panel-num');
+  const titleEl = document.getElementById('wfstep-panel-title');
+  const reEl    = document.getElementById('wfstep-panel-reframe');
+  const remEl   = document.getElementById('wfstep-panel-reminders');
+  const easyEl  = document.getElementById('wfstep-panel-easy');
+  const xEl     = document.getElementById('wfstep-panel-crosslink');
+
+  numEl.textContent = (role === 'tech' ? 'TECH \u00b7 STEP ' : 'SA \u00b7 STEP ') + String(stepNum).padStart(2, '0');
+  titleEl.textContent = step.title;
+  reEl.textContent = step.reframe;
+
+  remEl.innerHTML = (step.reminders || []).map(r =>
+    '<div class="wfp-reminder">' + r + '</div>'
+  ).join('');
+
+  if (step.easyToForget) {
+    easyEl.innerHTML =
+      '<div class="wfp-easy">' +
+        '<div class="wfp-easy-label">Easy to forget</div>' +
+        '<div class="wfp-easy-text">' + step.easyToForget + '</div>' +
+      '</div>';
+  } else {
+    easyEl.innerHTML = '';
+  }
+
+  if (step.crosslink) {
+    xEl.innerHTML =
+      '<button class="wfp-crosslink" onclick="closePanel(); switchToDiagTab();">' +
+        '<span>' + step.crosslink + '</span><span>\u2197</span>' +
+      '</button>';
+  } else {
+    xEl.innerHTML = '';
+  }
+
+  // Save bookmark and re-paint
+  fhSetWfBookmark(role, stepNum);
+
+  openPanel('wfstep-panel');
+}
+
+function switchToDiagTab() {
+  const btn = document.querySelector('#wf-tabs-bar .tab-btn[data-tab="wf-diag"]');
+  if (btn) switchTab(btn, 'wf-diag');
+}
+
+/* ─── DIAGNOSTIC PANEL RENDER ─────────────────────────────────────────── */
+
+function openDiagPanel(symptom) {
+  const panel = document.getElementById('diag-panel');
+  panel.dataset.symptom = symptom;
+  renderDiagPanel(symptom);
+  openPanel('diag-panel');
+}
+
+function renderDiagPanel(symptom) {
+  const titleEl = document.getElementById('diag-panel-title');
+  const makeEl  = document.getElementById('diag-panel-make');
+  const bodyEl  = document.getElementById('diag-panel-body');
+  const make    = fhGetMake();
+  makeEl.textContent = fhMakeName(make);
+
+  if (symptom === 'voltage') {
+    titleEl.textContent = 'Voltage References';
+    bodyEl.innerHTML = renderVoltageBody(make);
+    return;
+  }
+
+  const data = DIAG_DATA[symptom];
+  if (!data) { titleEl.textContent = '\u2014'; bodyEl.innerHTML = ''; return; }
+  titleEl.textContent = data.title;
+
+  let html = '';
+
+  // First Checks
+  html += '<div class="diag-section">' +
+            '<div class="diag-section-label">First Checks</div>' +
+            '<div class="diag-list">' +
+              data.firstChecks.map(c => '<div class="diag-list-item">' + c + '</div>').join('') +
+            '</div>' +
+          '</div>';
+
+  // Then Narrow It Down
+  html += '<div class="diag-section">' +
+            '<div class="diag-section-label">Then Narrow It Down</div>' +
+            '<div class="diag-branches">' +
+              data.branches.map(b =>
+                '<div class="diag-branch">' +
+                  '<div class="br-if">If \u00b7 ' + b.ifText + '</div>' +
+                  '<div class="br-then">\u2192 ' + b.thenText + '</div>' +
+                '</div>'
+              ).join('') +
+            '</div>' +
+          '</div>';
+
+  // Common on [Make] (Coleman branch checked FIRST per Part 21.6 fix)
+  const list = (data.common && data.common[make]) || [];
+  html += '<div class="diag-section">' +
+            '<div class="diag-section-label">Common on ' + fhMakeName(make) + '</div>';
+  if (make === 'coleman') {
+    html += '<div class="diag-empty">Reference data coming when warranty service center goes live.</div>';
+  } else if (list.length === 0) {
+    html += '<div class="diag-empty">No make-specific common faults catalogued for this symptom yet.</div>';
+  } else {
+    html += '<div class="diag-known">' +
+              list.map(r => '<div class="diag-known-row">' + r + '</div>').join('') +
+            '</div>';
+  }
+  html += '</div>';
+
+  bodyEl.innerHTML = html;
+}
+
+function renderVoltageBody(make) {
+  let html = '';
+
+  // Universal block
+  VOLT_UNIVERSAL.forEach(blk => {
+    html += '<div class="volt-block">' +
+              '<div class="volt-block-label">' + blk.label + ' \u00b7 UNIVERSAL</div>' +
+              blk.rows.map(([k, v]) =>
+                '<div class="volt-row"><span class="vk">' + k + '</span><span class="vv">' + v + '</span></div>'
+              ).join('') +
+            '</div>';
+  });
+
+  // Make-specific blocks
+  const blocks = VOLT_DATA[make] || [];
+  if (make === 'coleman') {
+    html += '<div class="volt-block"><div class="diag-empty">Reference data coming when warranty service center goes live.</div></div>';
+  } else if (blocks.length === 0) {
+    html += '<div class="volt-block"><div class="diag-empty">No make-specific voltage data catalogued yet.</div></div>';
+  } else {
+    blocks.forEach(blk => {
+      html += '<div class="volt-block">' +
+                '<div class="volt-block-label">' + blk.label + ' \u00b7 ' + fhMakeName(make).toUpperCase() + '</div>' +
+                blk.rows.map(([k, v]) =>
+                  '<div class="volt-row"><span class="vk">' + k + '</span><span class="vv">' + v + '</span></div>'
+                ).join('') +
+              '</div>';
+    });
+  }
+
+  return html;
+}
+
+/* ─── MAKE PICKER ─────────────────────────────────────────────────────── */
+
+function openMakePicker() {
+  const grid = document.getElementById('makepicker-grid');
+  const current = fhGetMake();
+  grid.innerHTML = FH_MAKES.map(m => {
+    const cls = ['make-pick'];
+    if (m.id === current) cls.push('active');
+    if (m.disabled) cls.push('disabled');
+    const onclick = m.disabled ? '' : 'onclick="pickMake(\'' + m.id + '\')"';
+    return '<button class="' + cls.join(' ') + '" ' + onclick + '>' +
+              m.name +
+              '<span class="mp-sub">' + m.sub + '</span>' +
+           '</button>';
+  }).join('');
+  // Don't dismiss the diag-panel — open makepicker on top
+  document.getElementById('panel-overlay').classList.add('open');
+  document.getElementById('makepicker-panel').classList.add('open');
+}
+
+function pickMake(id) {
+  fhSetMake(id);
+  // Close just the make picker, leave diag panel open
+  document.getElementById('makepicker-panel').classList.remove('open');
+  // Re-render currently-open diag panel (handled inside fhSetMake)
+}
+
+/* ─── EXTERNAL LINKS (ARI / OctopusPro / Cyclepedia / Coleman) ───────── */
+
+const FH_EXT_URLS = {
+  ari:        'https://web.ari.app',
+  octopus:    'https://app.octopuspro.com',
+  cyclepedia: 'https://www.cyclepedia.com',
+  coleman:    null
+};
+
+function openExt(which) {
+  const url = FH_EXT_URLS[which];
+  if (!url) return; // disabled (Coleman)
+  // Native app deeplink: just hand off the URL. The OS prompts to open the
+  // native app if installed, otherwise it falls back to the web view.
+  try { window.open(url, '_blank', 'noopener'); }
+  catch (e) { window.location.href = url; }
+}
+
+/* ─── QUICK REF PRE-FILL + TAB SWITCH ────────────────────────────────── */
+
+function prefillQuickRef() {
+  const dp = document.getElementById('diag-panel');
+  const symptom = dp ? dp.dataset.symptom : '';
+  const make = fhGetMake();
+  const makeName = fhMakeName(make);
+  const symName = (symptom && DIAG_DATA[symptom]) ? DIAG_DATA[symptom].title
+                : (symptom === 'voltage') ? 'Voltage'
+                : '';
+  const query = (makeName + ' ' + symName).trim();
+
+  // Close diag panel
+  closePanel();
+
+  // Switch to Quick Ref tab
+  setTimeout(() => {
+    const btn = document.querySelector('#wf-tabs-bar .tab-btn[data-tab="wf-ref"]');
+    if (btn) switchTab(btn, 'wf-ref');
+    const input = document.getElementById('wf-ref-search');
+    if (input) {
+      input.value = query;
+      input.focus();
+    }
+  }, 200);
+}
+
+/* ─── INIT (after DOM ready) ─────────────────────────────────────────── */
+
+(function fhV33Init() {
+  function init() {
+    // Position the tab indicator if tech-field happens to be visible at boot
+    const activeBtn = document.querySelector('#wf-tabs-bar .tab-btn.active');
+    if (activeBtn) {
+      // give the layout a tick to settle
+      setTimeout(() => {
+        const indicator = document.getElementById('wf-tab-indicator');
+        if (indicator && activeBtn.offsetWidth > 0) {
+          indicator.style.width = activeBtn.offsetWidth + 'px';
+          indicator.style.transform = 'translateX(' + activeBtn.offsetLeft + 'px)';
+        }
+      }, 60);
+    }
+    // Apply gold bookmarks to the visible role
+    applyWfBookmark('tech');
+    applyWfBookmark('sa');
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
 
 </script>
 
