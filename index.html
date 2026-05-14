@@ -714,6 +714,53 @@
   .adm-panel { display:none; padding:14px 18px 20px; }
   .adm-panel.active { display:block; }
 
+  /* ── Admin Overview hero ── */
+  .adm-hero-kpi { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+  .adm-kpi-card { background:var(--bg-1); border:1px solid var(--border); border-radius:14px; padding:16px 14px; }
+  .adm-kpi-card.full { grid-column:1/-1; }
+  .adm-kpi-lbl { font-family:var(--font-mono); font-size:9px; letter-spacing:0.14em; color:var(--text-3); text-transform:uppercase; margin-bottom:6px; }
+  .adm-kpi-val { font-family:var(--font-mono); font-size:26px; font-weight:700; line-height:1; }
+  .adm-kpi-sub { font-size:11px; color:var(--text-3); margin-top:5px; }
+  .adm-week-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border); }
+  .adm-week-row:last-child { border-bottom:none; }
+  .adm-section-hd { font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-3); margin:14px 0 8px; font-weight:600; }
+  .adm-backup-row { display:flex; align-items:center; gap:12px; padding:12px 14px; background:var(--bg-1); border:1px solid var(--border); border-radius:10px; cursor:pointer; margin-bottom:8px; }
+  .adm-backup-icon { font-size:20px; flex-shrink:0; }
+  .adm-backup-body { flex:1; }
+  .adm-backup-title { font-size:13px; font-weight:600; color:var(--text-1); }
+  .adm-backup-sub { font-size:11px; color:var(--text-3); margin-top:2px; }
+
+  /* ── Admin Team member cards ── */
+  .adm-member-card { background:var(--bg-1); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:10px; }
+  .adm-member-head { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+  .adm-member-avatar { width:42px; height:42px; border-radius:50%; background:var(--bg-2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; flex-shrink:0; color:var(--gold-text); }
+  .adm-member-info { flex:1; min-width:0; }
+  .adm-member-name { font-size:15px; font-weight:700; margin-bottom:2px; }
+  .adm-member-email { font-size:11px; color:var(--text-3); font-family:var(--font-mono); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .adm-member-role-badge { padding:4px 10px; border-radius:20px; font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:0.06em; flex-shrink:0; }
+  .adm-member-role-badge.tech { background:rgba(59,130,246,0.12); color:#60a5fa; }
+  .adm-member-role-badge.sa { background:rgba(200,160,32,0.12); color:var(--gold-text); }
+  .adm-member-signin { font-size:11px; color:var(--text-3); margin-bottom:8px; }
+  .adm-member-modules { margin-bottom:8px; }
+  .adm-module-bar { height:3px; background:var(--bg-2); border-radius:2px; margin-bottom:4px; }
+  .adm-module-fill { height:100%; background:var(--green); border-radius:2px; transition:width 0.4s; }
+  .adm-module-label { font-size:10px; color:var(--text-3); }
+  .adm-member-actions { display:flex; gap:6px; }
+  .adm-act-btn { flex:1; padding:8px; border-radius:8px; font-size:12px; font-weight:600; text-align:center; cursor:pointer; }
+  .adm-act-btn.edit { background:var(--bg-2); color:var(--text-1); border:1px solid var(--border); }
+  .adm-act-btn.remove { background:rgba(239,68,68,0.08); color:var(--red); border:1px solid rgba(239,68,68,0.2); }
+
+  /* ── Activity log in team panel ── */
+  .adm-activity-section { margin-top:20px; }
+
+  /* ── CC section header within admin-cc ── */
+  .cc-section-hd { font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:var(--text-3); text-transform:uppercase; margin:16px 0 8px; font-weight:600; padding-bottom:6px; border-bottom:1px solid var(--border); }
+  .cc-sa-pay-box { background:rgba(200,160,32,0.08); border:1px solid rgba(200,160,32,0.2); border-radius:10px; padding:12px 14px; margin-top:10px; }
+  .cc-visit-chips { display:flex; gap:6px; margin-bottom:10px; }
+  .cc-visit-chip { flex:1; padding:8px 4px; text-align:center; font-size:11px; font-family:var(--font-mono); font-weight:600; letter-spacing:0.06em; border-radius:8px; cursor:pointer; background:var(--bg-2); border:1px solid var(--border); color:var(--text-3); transition:all 0.15s; }
+  .cc-visit-chip.active { background:var(--gold-bg); border-color:rgba(200,160,32,0.4); color:var(--gold-text); }
+  .cc-multivisit-note { font-size:11px; color:var(--text-3); margin-top:4px; line-height:1.4; }
+
   /* ── Admin CC Launch card ── */
   .adm-cc-launch { width:100%; display:flex; align-items:center; gap:14px; padding:18px 16px; background:var(--bg-1); border:1px solid var(--gold); border-radius:14px; margin-bottom:16px; text-align:left; transition:background 0.15s; }
   .adm-cc-launch:active { background:var(--gold-bg); }
@@ -1694,88 +1741,90 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     </div>
     <div class="scroll-area">
 
-      <!-- ── OVERVIEW (default) ── -->
+      <!-- ── OVERVIEW ── -->
       <div class="adm-panel active" id="adm-overview">
-        <div class="admin-help-blurb">👁 Business overview. KPIs, team health, and recent activity at a glance. Launch the Command Center below to log jobs, track tech payouts, and run your P&L.</div>
-        <!-- KPI tiles row -->
-        <div class="cc-sgrid" style="margin:0 0 14px;">
-          <div class="cc-scard"><div class="cc-slbl">Month Revenue</div><div class="cc-sval" id="adm-mo-rev" style="color:var(--text-1);">—</div></div>
-          <div class="cc-scard"><div class="cc-slbl">Month Profit</div><div class="cc-sval" id="adm-mo-profit" style="color:var(--green);">—</div></div>
-          <div class="cc-scard"><div class="cc-slbl">Bills Status</div><div class="cc-sval" id="adm-bills-kpi">—</div></div>
-        </div>
-        <!-- Command Center launch card — the CC is its own module (stock paper trading model) -->
-        <button class="adm-cc-launch" onclick="goTo('admin-cc')">
-          <div class="adm-cc-launch-icon">📊</div>
-          <div class="adm-cc-launch-body">
-            <div class="adm-cc-launch-title">Command Center</div>
-            <div class="adm-cc-launch-sub">Private P&amp;L · Tech Payouts · Job Log · Reserve Fund</div>
-          </div>
-          <div class="adm-cc-launch-arrow">→</div>
-        </button>
-        <!-- Activity preview -->
-        <div style="font-size:13px;font-weight:600;margin-bottom:8px;">Recent Activity</div>
-        <div id="adm-activity-preview"></div>
 
-        <!-- Data Backup & Restore -->
-        <div style="margin-top:16px;padding:18px;background:var(--bg-1);border:1px solid var(--border);border-radius:14px;">
-          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;">💾 Data Backup &amp; Restore</div>
-          <div style="font-size:13px;color:var(--text-2);margin-bottom:14px;line-height:1.5;">Export all app data to a JSON file. Safe to do anytime — existing data is never deleted on export. Restore from a backup to recover lost data after a device wipe or new phone.</div>
-          <button onclick="exportBackup()" class="btn gold" style="margin-bottom:10px;height:44px;font-size:13px;">⬇ Export Backup Now</button>
-          <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--bg-2);border:1px dashed var(--border-strong);border-radius:10px;cursor:pointer;" onclick="document.getElementById('restore-file-input').click()">
-            <div style="font-size:20px;">⬆</div>
+        <!-- Week KPI strip — the at-a-glance state -->
+        <div class="adm-hero-kpi">
+          <div class="adm-kpi-card">
+            <div class="adm-kpi-lbl">Month Revenue</div>
+            <div class="adm-kpi-val" id="adm-mo-rev" style="color:var(--text-1);">—</div>
+            <div class="adm-kpi-sub" id="adm-wk-rev-sub">This week: —</div>
+          </div>
+          <div class="adm-kpi-card">
+            <div class="adm-kpi-lbl">Month Profit</div>
+            <div class="adm-kpi-val" id="adm-mo-profit" style="color:var(--green);">—</div>
+            <div class="adm-kpi-sub" id="adm-wk-profit-sub">After tech pay &amp; parts</div>
+          </div>
+          <div class="adm-kpi-card full" style="display:flex;justify-content:space-between;align-items:center;">
             <div>
-              <div style="font-size:13px;font-weight:600;color:var(--text-1);">Restore from Backup</div>
-              <div style="font-size:11px;color:var(--text-3);margin-top:2px;">Tap to select a foxhole-backup-*.json file</div>
+              <div class="adm-kpi-lbl">Bills Status</div>
+              <div style="font-size:13px;color:var(--text-2);margin-top:4px;" id="adm-bills-detail">Add bills in Command Center</div>
             </div>
+            <div class="adm-kpi-val" id="adm-bills-kpi" style="font-size:22px;">—</div>
           </div>
-          <input type="file" id="restore-file-input" accept=".json" style="display:none;" onchange="importBackup(this)">
-          <div id="backup-status" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
         </div>
+
+        <!-- This week summary -->
+        <div class="adm-section-hd">This Week</div>
+        <div style="background:var(--bg-1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:14px;">
+          <div class="adm-week-row"><span style="font-size:13px;color:var(--text-2);">Jobs logged</span><span style="font-family:var(--font-mono);font-weight:700;" id="adm-wk-jobs">—</span></div>
+          <div class="adm-week-row"><span style="font-size:13px;color:var(--text-2);">Tech payouts</span><span style="font-family:var(--font-mono);font-weight:700;color:#60a5fa;" id="adm-wk-techpay">—</span></div>
+          <div class="adm-week-row"><span style="font-size:13px;color:var(--text-2);">SA commission</span><span style="font-family:var(--font-mono);font-weight:700;color:var(--gold-text);" id="adm-wk-sapay">—</span></div>
+          <div class="adm-week-row"><span style="font-size:13px;color:var(--text-2);">Parts out</span><span style="font-family:var(--font-mono);font-weight:700;color:var(--red);" id="adm-wk-parts">—</span></div>
+        </div>
+
+        <!-- Data Backup — compact -->
+        <div class="adm-section-hd">Data</div>
+        <div class="adm-backup-row" onclick="exportBackup()">
+          <div class="adm-backup-icon">⬇</div>
+          <div class="adm-backup-body">
+            <div class="adm-backup-title">Export Backup</div>
+            <div class="adm-backup-sub">Save all app data to a JSON file</div>
+          </div>
+        </div>
+        <div class="adm-backup-row" onclick="document.getElementById('restore-file-input').click()">
+          <div class="adm-backup-icon">⬆</div>
+          <div class="adm-backup-body">
+            <div class="adm-backup-title">Restore from Backup</div>
+            <div class="adm-backup-sub">Select a foxhole-backup-*.json file</div>
+          </div>
+        </div>
+        <input type="file" id="restore-file-input" accept=".json" style="display:none;" onchange="importBackup(this)">
+        <div id="backup-status" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;"></div>
       </div>
 
-      <!-- ── TEAM ── -->
+      <!-- ── TEAM — unified roster + training + activity ── -->
       <div class="adm-panel" id="adm-team">
-        <div class="admin-help-blurb">👥 Team roster. Health signal and 7-day activity dots per member. Tech roster is managed inside the Command Center. Add non-tech team members here.</div>
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;">
-          <div style="font-size:14px;font-weight:600;">Team Roster</div>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-2);" id="admin-member-count">0 members</span>
-            <button class="btn gold" style="padding:8px 14px;font-size:12px;" onclick="openPanel('addtech-panel')">+ Add SA</button>
+        <!-- Header -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <div>
+            <div style="font-size:16px;font-weight:700;">Team</div>
+            <div style="font-family:var(--font-mono);font-size:10px;color:var(--text-3);margin-top:2px;" id="admin-member-count">0 members</div>
           </div>
+          <button class="btn gold" style="padding:8px 16px;font-size:13px;" onclick="openPanel('addtech-panel')">+ Add Member</button>
         </div>
-        <div id="admin-team-list"></div>
-      </div>
 
-      <!-- ── TRAINING ── -->
-      <div class="adm-panel" id="adm-training">
-        <div class="admin-help-blurb">📚 Training management. Monitor module progress per team member. Edit affirmations that appear on tech and SA home screens — auto-saves when you click away.</div>
-        <!-- Tech Training Progress section -->
-        <div style="font-size:14px;font-weight:600;margin-bottom:10px;">Team Training Progress</div>
-        <div id="adm-training-progress" style="margin-bottom:20px;"></div>
-        <!-- Affirmations CRUD — proper add/delete -->
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-          <div style="font-size:14px;font-weight:600;">Affirmations</div>
+        <!-- Member cards -->
+        <div id="admin-team-list"></div>
+
+        <!-- Affirmations -->
+        <div class="adm-section-hd" style="margin-top:20px;">Daily Affirmations</div>
+        <div style="font-size:12px;color:var(--text-3);margin-bottom:10px;line-height:1.5;">Shown on Tech and SA home screens. Auto-saves on blur.</div>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
           <button class="btn gold" style="padding:6px 14px;font-size:12px;" onclick="addAffirmation()">+ Add</button>
         </div>
-        <div style="font-size:12px;color:var(--text-3);margin-bottom:14px;">Shown on tech and SA home screens as daily motivation. Auto-saves on blur. Add or delete freely.</div>
         <div id="affirm-list"></div>
-      </div>
 
-      <!-- ── BILLS ── -->
-      <div class="adm-panel" id="adm-bills">
-        <div class="admin-help-blurb">💸 Monthly fixed costs. Weekly share auto-calculated (÷ 4.3). Bills Covered tile in the Command Center shows whether this month's revenue clears total obligations.</div>
-        <div style="font-size:14px;font-weight:600;margin-bottom:10px;">This Month</div>
-        <div id="cc-bills-summary" style="background:var(--bg-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;"></div>
-        <div style="font-size:14px;font-weight:600;margin-bottom:10px;">Weekly Share Per Bill</div>
-        <div id="cc-bills-weekly" style="background:var(--bg-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:16px;"></div>
-        <div style="font-size:14px;font-weight:600;margin-bottom:6px;">Bills &amp; Fixed Costs</div>
-        <div style="font-size:12px;color:var(--text-3);margin-bottom:12px;">Monthly amounts — weekly share (÷ 4.3) is auto-calculated.</div>
-        <div id="cc-bills-editor"></div>
-        <button class="bill-add-btn" onclick="ccAddBill()">+ Add Bill</button>
+        <!-- Activity log -->
+        <div class="adm-activity-section">
+          <div class="adm-section-hd">Activity Log</div>
+          <div id="admin-activity-log"></div>
+        </div>
       </div>
 
     </div>
-    <!-- Bottom nav — consistent with all other views. Shneiderman Rule 4: always offer an exit. -->
+    <!-- Bottom nav: 4 items. CC gets its own button. Bills/Training merged into CC/Team. -->
     <nav class="nav" id="admin-screen-nav">
       <button class="nav-btn active" onclick="admSwitchTab('adm-overview',this)">
         <svg viewBox="0 0 24 24"><path d="M3 12 L12 4 L21 12 M5 10 V20 H19 V10"/></svg>
@@ -1785,13 +1834,9 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span class="nav-label">Team</span>
       </button>
-      <button class="nav-btn" onclick="admSwitchTab('adm-training',this)">
-        <svg viewBox="0 0 24 24"><path d="M2 8 L12 3 L22 8 L12 13 Z M6 11 V17 C6 17 9 19 12 19 C15 19 18 17 18 17 V11"/></svg>
-        <span class="nav-label">Training</span>
-      </button>
-      <button class="nav-btn" onclick="admSwitchTab('adm-bills',this)">
-        <svg viewBox="0 0 24 24"><path d="M14 2 H6 A2 2 0 0 0 4 4 V20 A2 2 0 0 0 6 22 H18 A2 2 0 0 0 20 20 V8 Z M14 2 V8 H20 M16 13 H8 M16 17 H8 M10 9 H8"/></svg>
-        <span class="nav-label">Bills</span>
+      <button class="nav-btn" onclick="goTo('admin-cc')">
+        <svg viewBox="0 0 24 24"><path d="M4 20 V12 M10 20 V6 M16 20 V10 M22 20 V4"/></svg>
+        <span class="nav-label">Command</span>
       </button>
       <button class="nav-btn" onclick="goTo('login')">
         <svg viewBox="0 0 24 24"><path d="M9 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 H9 M16 17 L21 12 L16 7 M21 12 H9"/></svg>
@@ -1833,6 +1878,18 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
       <!-- Job form -->
       <div class="cc-fcard" id="cc-job-form" style="display:none;">
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;margin-bottom:12px;" id="cc-form-title">New Job</div>
+
+        <!-- Visit Type — handles multi-visit jobs clearly -->
+        <div style="margin-bottom:12px;">
+          <label class="cc-flbl">Visit Type</label>
+          <div class="cc-visit-chips" id="cc-visit-chips">
+            <button class="cc-visit-chip active" onclick="ccPickVisit(this,'single')">Single Visit</button>
+            <button class="cc-visit-chip" onclick="ccPickVisit(this,'first')">First Visit</button>
+            <button class="cc-visit-chip" onclick="ccPickVisit(this,'return')">Return Visit</button>
+          </div>
+          <div class="cc-multivisit-note" id="cc-visit-note">One visit, job complete. Tech pay = calcPayout(invoice).</div>
+        </div>
+
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
           <div><label class="cc-flbl">Job # / Ref</label><input id="cc-f-jobnum" class="cc-fi" placeholder="JC-1042"></div>
           <div><label class="cc-flbl">Technician</label><select id="cc-f-tech" class="cc-fi"><option value="">Select…</option></select></div>
@@ -1842,12 +1899,16 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
           <div><label class="cc-flbl">Parts Cost</label><input id="cc-f-parts" type="number" class="cc-fi" placeholder="0" inputmode="decimal" oninput="ccUpdatePreview()"></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-          <div><label class="cc-flbl">Parts Deposit Received</label><input id="cc-f-deposit" type="number" class="cc-fi" placeholder="0" inputmode="decimal"></div>
+          <div><label class="cc-flbl">Cash Collected Today</label><input id="cc-f-cashcol" type="number" class="cc-fi" placeholder="0" inputmode="decimal" oninput="ccUpdatePreview()" style="border-color:rgba(200,160,32,0.3);"></div>
+          <div><label class="cc-flbl">Parts Deposit</label><input id="cc-f-deposit" type="number" class="cc-fi" placeholder="0" inputmode="decimal"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
           <div><label class="cc-flbl">Bonus to Tech</label><input id="cc-f-bonus" type="number" class="cc-fi" placeholder="0" inputmode="decimal" oninput="ccUpdatePreview()"></div>
+          <div></div>
         </div>
         <!-- Live preview — calcPayout model: $200 if inv>=500, else $100 -->
         <div class="cc-prev-box" id="cc-prev-box" style="display:none;">
-          <div style="font-size:10px;color:var(--text-3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Live Preview · calcPayout: $200 (job≥$500) or $100</div>
+          <div style="font-size:10px;color:var(--text-3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Live Preview · calcPayout: $200 (job≥$500) or $100 · SA 10% of cash collected</div>
           <div class="cc-prev-vals" id="cc-prev-vals"></div>
         </div>
         <div style="display:flex;gap:10px;margin-top:10px;">
@@ -1865,22 +1926,37 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;margin-bottom:10px;">Weekly P&amp;L</div>
         <div id="cc-weekly-pl"></div>
       </div>
-      <!-- ── Tech Roster — admin-cc only ── -->
+      <!-- ── Tech Roster — synced from Team tab ── -->
       <div style="background:var(--bg-1);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
           <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;">Technicians</div>
-          <div style="display:flex;gap:8px;">
-            <input id="cc-new-tech" style="background:var(--bg-2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--text-1);outline:none;width:130px;" placeholder="Tech name…">
-            <button class="btn gold" style="padding:8px 14px;font-size:13px;" onclick="ccAddTech()">Add</button>
-          </div>
+          <div style="font-size:11px;color:var(--text-3);">Managed in Team tab</div>
         </div>
+        <div style="font-size:11px;color:var(--text-3);margin-bottom:10px;">Techs added to your Team roster appear here automatically.</div>
         <div id="cc-chips"></div>
       </div>
       <!-- ── Tech Reserve Fund — admin-cc only ── -->
-      <div style="background:var(--bg-1);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:12px;margin-bottom:16px;">
+      <div style="background:var(--bg-1);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:12px;">
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;margin-bottom:10px;">Tech Reserve Fund</div>
         <div style="font-size:12px;color:var(--text-3);margin-bottom:12px;">Manual reserve tracking per tech. Separate from job payout caps.</div>
         <div id="cc-reserve-body"></div>
+      </div>
+
+      <!-- ── Bills & Fixed Costs — built into CC ── -->
+      <div style="background:var(--bg-1);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-top:12px;margin-bottom:16px;">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;margin-bottom:10px;">Bills &amp; Fixed Costs</div>
+
+        <!-- Status summary -->
+        <div id="cc-bills-summary" style="margin-bottom:12px;"></div>
+
+        <!-- Weekly share breakdown -->
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;">Weekly Share Per Bill</div>
+        <div id="cc-bills-weekly" style="background:var(--bg-2);border-radius:10px;padding:10px 12px;margin-bottom:12px;"></div>
+
+        <!-- Editor -->
+        <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px;">Edit Bills</div>
+        <div id="cc-bills-editor"></div>
+        <button class="bill-add-btn" onclick="ccAddBill()">+ Add Bill</button>
       </div>
     </div>
   </section>
@@ -2068,6 +2144,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
   <div class="slide-panel" id="addtech-panel">
     <div class="panel-handle"></div>
     <div class="panel-title">Add Team Member</div>
+    <div style="font-size:12px;color:var(--text-3);margin-bottom:14px;line-height:1.5;">Tech members automatically appear in Command Center job logging. SA members track sign-ins and commission.</div>
     <div class="panel-field"><label>Name</label><input type="text" id="member-name" placeholder="First Last"></div>
     <label style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-3);display:block;margin-bottom:8px;">Role</label>
     <div class="chip-row" id="member-role-chips">
@@ -2075,7 +2152,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
       <button class="chip-btn" onclick="selectChip(this)">SA · Remote</button>
       <button class="chip-btn" onclick="selectChip(this)">SA · Office</button>
     </div>
-    <div class="panel-field"><label>Email</label><input type="email" id="member-email" placeholder="name@addisonfoxhole.com"></div>
+    <div class="panel-field"><label>Email <span style="font-weight:400;color:var(--text-3);">(used for sign-in matching)</span></label><input type="email" id="member-email" placeholder="name@addisonfoxhole.com"></div>
     <button class="btn gold" onclick="addTeamMember()">Add Member</button>
     <button class="btn ghost" style="margin-top:8px;" onclick="closePanel()">Cancel</button>
   </div>
@@ -2126,7 +2203,7 @@ function enterApp() {
   } else if (selectedRole === 'sa') {
     const el = document.getElementById('sa-avatar'); if(el) el.textContent = email[0].toUpperCase();
     goTo('sa-home'); renderSA();
-  } else { goTo('admin'); renderAdmin(); }
+  } else { goTo('admin'); ccLoadBills(); renderAdmin(); }
 }
 function goTo(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.dataset.screen === name));
@@ -2861,25 +2938,70 @@ function calcWhatIf() {
 function renderSA() { renderSAHome(); renderStack(); renderParts(); renderNotes(); renderPayrollPulse(); wiInitDayTabs(); }
 
 // ADMIN
+function ccGetMoProfit() {
+  // Calculate month profit: revenue - parts - tech pay - SA commission
+  const now = new Date();
+  const mS = new Date(now.getFullYear(), now.getMonth(), 1);
+  const mE = new Date(now.getFullYear(), now.getMonth()+1, 0);
+  let rev = 0, parts = 0, techPay = 0, saPay = 0;
+  for (let o = 0; o >= -6; o--) {
+    const m = ccWkMonDate(o);
+    const s = new Date(m); s.setDate(m.getDate()+6);
+    if (s < mS || m > mE) continue;
+    const data = ccWeekCache[o] || ccLoadWeek(o);
+    const jobs = data.jobs || [];
+    rev += jobs.reduce((sum,j)=>sum+j.invoice,0);
+    parts += jobs.reduce((sum,j)=>sum+j.parts,0);
+    saPay += jobs.reduce((sum,j)=>sum+(j.cashCollected||0)*0.1,0);
+    (data.techs||[]).forEach(t => {
+      techPay += CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i,data),0);
+    });
+  }
+  return rev - parts - techPay - saPay;
+}
+
 function renderAdminOverview() {
-  // KPI tiles
-  // ccGetMoRevenue is the actual function — returns revenue; profit derived from wkSummary
+  ccLoadBills();
   let moRev = 0, moProfit = 0;
   try { moRev = ccGetMoRevenue(); moProfit = ccGetMoProfit(); } catch(e) {}
-  const mo = {rev: moRev, profit: moProfit};
   const bTotal = ccBills ? ccBills.reduce((s,b)=>s+b.amount,0) : 0;
-  const cov = mo.rev >= bTotal;
-  const revEl = document.getElementById('adm-mo-rev'); if(revEl) revEl.textContent = ccFmt ? ccFmt(mo.rev) : '$0';
-  const profEl = document.getElementById('adm-mo-profit'); if(profEl) { profEl.textContent = ccFmt ? ccFmt(mo.profit) : '$0'; profEl.style.color = mo.profit >= 0 ? 'var(--green)' : 'var(--red)'; }
-  const billsEl = document.getElementById('adm-bills-kpi'); if(billsEl) { billsEl.textContent = bTotal === 0 ? '—' : cov ? '✅ Covered' : '🔴 Short'; billsEl.style.color = bTotal === 0 ? 'var(--text-3)' : cov ? 'var(--green)' : 'var(--red)'; }
-  // Activity preview
-  const activity = S.get('activity');
-  const el = document.getElementById('adm-activity-preview'); if(!el) return;
-  if(!activity.length) {
-    el.innerHTML = '<div style="font-size:13px;color:var(--text-3);padding:12px 14px;background:var(--bg-1);border:1px dashed var(--border-strong);border-radius:10px;">No activity recorded yet.</div>';
-    return;
+  const cov = moRev >= bTotal;
+
+  // Month KPIs
+  const revEl = document.getElementById('adm-mo-rev');
+  if(revEl) revEl.textContent = ccFmt ? ccFmt(moRev) : '$0';
+  const profEl = document.getElementById('adm-mo-profit');
+  if(profEl) { profEl.textContent = ccFmt ? ccFmt(moProfit) : '$0'; profEl.style.color = moProfit >= 0 ? 'var(--green)' : 'var(--red)'; }
+  const billsEl = document.getElementById('adm-bills-kpi');
+  if(billsEl) { billsEl.textContent = bTotal===0 ? '—' : cov ? '✅ Covered' : '🔴 Short'; billsEl.style.color = bTotal===0?'var(--text-3)':cov?'var(--green)':'var(--red)'; }
+  const detailEl = document.getElementById('adm-bills-detail');
+  if(detailEl) {
+    if(bTotal===0) detailEl.textContent = 'Add bills in Command Center';
+    else if(cov) detailEl.textContent = ccFmt(moRev-bTotal)+' ahead of ' + ccFmt(bTotal) + '/mo';
+    else detailEl.textContent = ccFmt(bTotal-moRev)+' short of ' + ccFmt(bTotal) + '/mo';
   }
-  el.innerHTML = activity.slice(0,5).map(a=>`<div class="activity-item"><div class="ai-dot ${a.type}"></div><div class="ai-text">${a.msg}</div><div class="ai-time">${timeAgo(a.ts)}</div></div>`).join('');
+
+  // This-week summary
+  const wk = ccWeekCache[0] || ccLoadWeek(0);
+  const wkJobs = wk.jobs || [];
+  const wkRev = wkJobs.reduce((s,j)=>s+j.invoice,0);
+  const wkParts = wkJobs.reduce((s,j)=>s+j.parts,0);
+  const wkSaPay = wkJobs.reduce((s,j)=>s+(j.cashCollected||0)*0.1,0);
+  const wkTechPay = (wk.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i,wk),0),0);
+
+  const revSubEl = document.getElementById('adm-wk-rev-sub');
+  if(revSubEl) revSubEl.textContent = 'This week: ' + (ccFmt ? ccFmt(wkRev) : '$0');
+  const profSubEl = document.getElementById('adm-wk-profit-sub');
+  if(profSubEl) { const wkProfit = wkRev - wkParts - wkTechPay - wkSaPay; profSubEl.textContent = 'This week: ' + (ccFmt ? ccFmt(wkProfit) : '$0'); }
+
+  const wkJobsEl = document.getElementById('adm-wk-jobs');
+  if(wkJobsEl) wkJobsEl.textContent = wkJobs.length + (wkJobs.length===1?' job':' jobs');
+  const wkTechEl = document.getElementById('adm-wk-techpay');
+  if(wkTechEl) wkTechEl.textContent = ccFmt ? ccFmt(wkTechPay) : '$0';
+  const wkSaEl = document.getElementById('adm-wk-sapay');
+  if(wkSaEl) wkSaEl.textContent = ccFmt ? ccFmt(wkSaPay) : '$0';
+  const wkPartsEl = document.getElementById('adm-wk-parts');
+  if(wkPartsEl) wkPartsEl.textContent = ccFmt ? ccFmt(wkParts) : '$0';
 }
 
 // Tech reserve for admin-cc
@@ -3043,8 +3165,8 @@ function admSwitchTab(id, btn) {
   const panel = document.getElementById(id); if(panel) panel.classList.add('active');
   document.querySelectorAll('#admin-screen-nav .nav-btn').forEach(b => b.classList.remove('active'));
   if(btn) btn.classList.add('active');
-  if(id==='adm-bills') { ccLoadBills(); renderCCBills(); }
-  if(id==='adm-training') { renderAffirmations(); renderAdminTrainingProgress(); }
+  if(id==='adm-team') { renderAffirmations(); renderAdminTeam(); renderAdminActivity(); }
+  if(id==='adm-overview') { renderAdminOverview(); }
 }
 
 function renderAdminTrainingProgress() {
@@ -3084,65 +3206,68 @@ function renderAdminTrainingProgress() {
 function renderAdmin() {
   ccLoadBills();
   renderAdminOverview();
-  renderAffirmations();
-  const members=S.get('members');
-  const activity=S.get('activity');
-  const entries=S.get('cashflow');
-  const parts=S.get('parts');
-  const notes=S.get('notes');
-  document.getElementById('admin-member-count').textContent=members.length+' members';
+}
 
-  const teamEl=document.getElementById('admin-team-list');
-  if(teamEl){
-    if(!members.length){
-      teamEl.innerHTML='<div style="font-size:13px;color:var(--text-3);padding:8px 0 16px;">No SA team members added yet. Technicians are managed inside the Command Center.</div>';
+function renderAdminTeam() {
+  const members = S.get('members');
+  const activity = S.get('activity');
+  const mcEl = document.getElementById('admin-member-count');
+  if(mcEl) mcEl.textContent = members.length + (members.length===1?' member':' members');
+
+  // Unified member cards — Tech + SA
+  const teamEl = document.getElementById('admin-team-list');
+  if(teamEl) {
+    if(!members.length) {
+      teamEl.innerHTML = `<div style="padding:20px 14px;background:var(--bg-1);border:1px dashed var(--border-strong);border-radius:12px;text-align:center;">
+        <div style="font-size:22px;margin-bottom:8px;">👥</div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:4px;">No team members yet</div>
+        <div style="font-size:12px;color:var(--text-3);">Tap + Add Member to add a Tech or SA. Techs auto-populate the Command Center job form.</div>
+      </div>`;
     } else {
-      // Show SA health pulse for each member — pull their cashflow/parts/notes activity signals
-      teamEl.innerHTML=members.map(m=>{
-        const memberActivity=activity.filter(a=>a.msg.toLowerCase().includes((m.email||m.name).toLowerCase()));
-        const allActivity=activity; // use global for now
-        const signal=signalFromActivity(m.email, allActivity);
-        const lastAct=allActivity.sort((a,b)=>b.ts-a.ts)[0];
-        const lastLogin=lastAct?timeAgo(lastAct.ts):'Never';
-        const cashIn=entries.filter(e=>e.type==='deposit'||e.type==='paid-in-full').reduce((s,e)=>s+e.amount,0);
-        const partsCount=parts.filter(p=>p.status==='my-turn').length;
-        const notesCount=notes.length;
-        return `<div class="pulse-person">
-          <div class="pulse-person-head">
-            <div class="pulse-avatar">${m.name[0].toUpperCase()}</div>
-            <div class="pulse-info">
-              <div class="pulse-name">${m.name}</div>
-              <div class="pulse-role">${m.role}</div>
+      const SA_MODULES=['Why People Say Yes','Selling the Parts Recon','The Call','When They Push Back','Systems & Daily Ops'];
+      const TECH_MODULES=['Your Role','The Service Call','Diagnostic Method','ARI + OctopusPro','Spotting Opportunities','Kit & Preparedness','Support & Resources'];
+      let tp={},sp={};
+      try{tp=(JSON.parse(localStorage.getItem('fh-tech-v3')||'{}').d)||{};}catch(e){}
+      try{sp=(JSON.parse(localStorage.getItem('fh-sa-v2')||'{}').d)||{};}catch(e){}
+      const TIDS=['t1','t2','t3','t4','t5','t6','t7'],SIDS=['m1','m2','m3','m4','m5'];
+
+      teamEl.innerHTML = members.map(m => {
+        const isTech = (m.role||'Tech').toLowerCase().includes('tech');
+        const modules = isTech ? TECH_MODULES : SA_MODULES;
+        const ids = isTech ? TIDS : SIDS;
+        const pg = isTech ? tp : sp;
+        const done = ids.filter(id=>pg[id]).length;
+        const total = modules.length;
+        const pct = total > 0 ? Math.round((done/total)*100) : 0;
+        const roleBadge = isTech ? 'tech' : 'sa';
+        const roleLabel = m.role || 'Tech';
+
+        // Last sign-in from activity
+        const logins = activity.filter(a => a.type==='login' && a.msg.toLowerCase().includes((m.email||m.name||'').toLowerCase()));
+        const lastSignIn = logins.length ? timeAgo(logins.sort((a,b)=>b.ts-a.ts)[0].ts) : 'Never signed in';
+
+        return `<div class="adm-member-card">
+          <div class="adm-member-head">
+            <div class="adm-member-avatar">${m.name[0].toUpperCase()}</div>
+            <div class="adm-member-info">
+              <div class="adm-member-name">${m.name}</div>
+              <div class="adm-member-email">${m.email||'No email set'}</div>
             </div>
-            <div class="pulse-signal ${signal.cls}">${signal.label}</div>
+            <div class="adm-member-role-badge ${roleBadge}">${roleLabel}</div>
           </div>
-          <div class="pulse-dots">${buildDots(allActivity)}</div>
-          <div class="pulse-stats">
-            <div class="pulse-stat"><div class="ps-label">Cash In</div><div class="ps-val">$${cashIn.toLocaleString()}</div><div class="ps-delta flat">logged</div></div>
-            <div class="pulse-stat"><div class="ps-label">Parts Due</div><div class="ps-val">${partsCount}</div><div class="ps-delta ${partsCount>0?'down':'flat'}">${partsCount>0?'my turn':'clear'}</div></div>
-            <div class="pulse-stat"><div class="ps-label">Notes</div><div class="ps-val">${notesCount}</div><div class="ps-delta flat">created</div></div>
+          <div class="adm-member-signin">Last sign-in: ${lastSignIn}</div>
+          <div class="adm-member-modules">
+            <div class="adm-module-bar"><div class="adm-module-fill" style="width:${pct}%;"></div></div>
+            <div class="adm-module-label">Training: ${done}/${total} modules${pct===100?' ✓':''}</div>
           </div>
-          <div class="pulse-actions">
-            <button class="pulse-btn edit" onclick="openPanel('addtech-panel')">Edit</button>
-            <button class="pulse-btn remove" onclick="confirmDelMember('${m.id}','${m.name}')">Remove</button>
+          <div class="adm-member-actions">
+            <button class="adm-act-btn edit" onclick="openPanel('addtech-panel')">Edit</button>
+            <button class="adm-act-btn remove" onclick="confirmDelMember('${m.id}','${m.name}')">Remove</button>
           </div>
         </div>`;
       }).join('');
     }
   }
-
-  const logEl=document.getElementById('admin-activity-log');
-  if(logEl){
-    if(!activity.length){logEl.innerHTML='<div style="padding:16px;background:var(--bg-1);border:1px dashed var(--border-strong);border-radius:12px;font-size:13px;color:var(--text-3);text-align:center;">No activity recorded yet.</div>';}
-    else logEl.innerHTML=activity.slice(0,20).map(a=>`<div class="activity-item"><div class="ai-dot ${a.type}"></div><div class="ai-text">${a.msg}</div><div class="ai-time">${timeAgo(a.ts)}</div></div>`).join('');
-  }
-
-  // Library
-  const affs=S.get('affirmations',Array.from({length:14},(_,i)=>({id:'a'+i,text:'[Affirmation '+(i+1)+' — pending]'})));
-  const al=document.getElementById('affirm-list');
-  if(al) al.innerHTML=affs.map((a,i)=>`<div class="affirm-editor"><div class="ae-head"><div class="ae-title">Affirmation ${i+1}</div><div class="ae-count">№${String(i+1).padStart(2,'0')} of 14</div></div><div class="ae-text">${a.text}</div></div>`).join('');
-
-  // Shop health KPIs (Team Pulse uses live data)
 }
 
 function renderShopHealth() {
@@ -3506,16 +3631,29 @@ function ccRemoveTech(name) {
 
 function renderCCChips() {
   const el = document.getElementById('cc-chips'); if (!el) return;
+  // Show techs from unified team roster
+  const members = S.get('members');
+  const techs = members.filter(m=>(m.role||'').toLowerCase().includes('tech')).map(m=>m.name);
   const wk = ccGetWeek();
-  const techs = wk.techs || [];
-  if (!techs.length) { el.innerHTML='<span style="font-size:13px;color:var(--text-3);">No techs added yet</span>'; return; }
-  el.innerHTML = techs.map(t=>`<span class="cc-chip">${t}<button class="cc-chipx" onclick="ccRemoveTech('${t}')">×</button></span>`).join('');
+  const legacyTechs = (wk.techs||[]).filter(t=>!techs.includes(t));
+  const allTechs = [...techs, ...legacyTechs];
+  if (!allTechs.length) {
+    el.innerHTML='<div style="font-size:12px;color:var(--text-3);">No technicians on roster. Add a Tech from the Team tab.</div>';
+    return;
+  }
+  el.innerHTML = allTechs.map(t=>`<span class="cc-chip">${t}</span>`).join('');
 }
 
 function renderCCTechSelect() {
   const sel = document.getElementById('cc-f-tech'); if(!sel) return;
+  // Pull from unified team roster (Tech role members)
+  const members = S.get('members');
+  const techs = members.filter(m=>(m.role||'').toLowerCase().includes('tech')).map(m=>m.name);
+  // Also include any techs from the legacy cc week data (backward compat)
   const wk = ccGetWeek();
-  sel.innerHTML = '<option value="">Select…</option>' + (wk.techs||[]).map(t=>`<option value="${t}">${t}</option>`).join('');
+  const legacyTechs = (wk.techs||[]).filter(t=>!techs.includes(t));
+  const allTechs = [...techs, ...legacyTechs];
+  sel.innerHTML = '<option value="">Select…</option>' + allTechs.map(t=>`<option value="${t}">${t}</option>`).join('');
 }
 
 function ccOpenForm() {
@@ -3527,24 +3665,53 @@ function ccOpenForm() {
 function ccCloseForm() {
   const btn = document.getElementById('cc-add-btn'); if(btn) btn.style.display='block';
   const form = document.getElementById('cc-job-form'); if(form) form.style.display='none';
-  ['cc-f-jobnum','cc-f-inv','cc-f-parts','cc-f-deposit','cc-f-bonus'].forEach(id=>{
+  ['cc-f-jobnum','cc-f-inv','cc-f-parts','cc-f-deposit','cc-f-bonus','cc-f-cashcol'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.value='';
   });
+  // Reset visit type to Single
+  document.querySelectorAll('.cc-visit-chip').forEach((b,i)=>b.classList.toggle('active',i===0));
+  const noteEl = document.getElementById('cc-visit-note');
+  if(noteEl) noteEl.textContent = 'One visit, job complete. Tech pay = calcPayout(invoice).';
   const prev = document.getElementById('cc-prev-box'); if(prev) prev.style.display='none';
+}
+
+function ccPickVisit(btn, type) {
+  document.querySelectorAll('.cc-visit-chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const notes = {
+    single: 'One visit, job complete. Tech pay = calcPayout(invoice).',
+    first: 'First visit (diagnostic/recon). Tech pay = $100 flat. Job stays open.',
+    return: 'Return visit (service/install). Tech pay = calcPayout(invoice) when job closes.'
+  };
+  const noteEl = document.getElementById('cc-visit-note');
+  if(noteEl) noteEl.textContent = notes[type]||'';
+}
+
+function ccGetVisitType() {
+  const active = document.querySelector('.cc-visit-chip.active');
+  if(!active) return 'single';
+  if(active.textContent.includes('First')) return 'first';
+  if(active.textContent.includes('Return')) return 'return';
+  return 'single';
 }
 
 function ccUpdatePreview() {
   const inv = parseFloat(document.getElementById('cc-f-inv')?.value)||0;
   const parts = parseFloat(document.getElementById('cc-f-parts')?.value)||0;
   const bonus = parseFloat(document.getElementById('cc-f-bonus')?.value)||0;
+  const cashCol = parseFloat(document.getElementById('cc-f-cashcol')?.value)||0;
   const prev = document.getElementById('cc-prev-box');
-  if (!inv) { if(prev) prev.style.display='none'; return; }
+  if (!inv && !cashCol) { if(prev) prev.style.display='none'; return; }
   if(prev) prev.style.display='block';
-  const payout = ccCalcPayout(inv);
-  const profit = inv - parts - payout - bonus;
+  const visitType = ccGetVisitType();
+  // First visits pay $100 flat (diagnostic); return/single use calcPayout
+  const payout = visitType==='first' ? 100 : ccCalcPayout(inv);
+  const saPay = cashCol * 0.1;
+  const profit = inv - parts - payout - bonus - saPay;
   const el = document.getElementById('cc-prev-vals');
   if(el) el.innerHTML=`
-    <div><div class="cc-mlbl">Tech Pay</div><div class="cc-mval" style="color:#3B82F6;">${ccFmt(payout)}</div></div>
+    <div><div class="cc-mlbl">Tech Pay</div><div class="cc-mval" style="color:#3B82F6;">${ccFmt(payout)}${visitType==='first'?' (diag)':''}</div></div>
+    <div><div class="cc-mlbl">SA Commission</div><div class="cc-mval" style="color:var(--gold-text);">${ccFmt(saPay)}</div></div>
     <div><div class="cc-mlbl">Job Profit</div><div class="cc-mval" style="color:var(--green);">${ccFmt(profit)}</div></div>
     ${bonus?`<div><div class="cc-mlbl">Bonus</div><div class="cc-mval" style="color:var(--amber);">${ccFmt(bonus)}</div></div>`:''}`;
 }
@@ -3556,14 +3723,17 @@ function ccSaveJob() {
   const parts = parseFloat(document.getElementById('cc-f-parts')?.value)||0;
   const bonus = parseFloat(document.getElementById('cc-f-bonus')?.value)||0;
   const deposit = parseFloat(document.getElementById('cc-f-deposit')?.value)||0;
+  const cashCollected = parseFloat(document.getElementById('cc-f-cashcol')?.value)||0;
   const jobNum = document.getElementById('cc-f-jobnum')?.value.trim()||'';
+  const visitType = ccGetVisitType();
   if (!inv) { alert('Enter invoice total.'); return; }
-  const payout = ccCalcPayout(inv);
+  // First visits pay $100 flat (diagnostic); return/single use calcPayout
+  const payout = visitType==='first' ? 100 : ccCalcPayout(inv);
   const wk = ccGetWeek();
   if (!wk.jobs) wk.jobs = [];
-  wk.jobs.push({ id:Date.now(), day:ccActiveDay, tech, invoice:inv, parts, bonus, payout, partsDeposit:deposit, jobNum });
+  wk.jobs.push({ id:Date.now(), day:ccActiveDay, tech, invoice:inv, parts, bonus, payout, partsDeposit:deposit, cashCollected, visitType, jobNum });
   ccSaveWeek(); ccCloseForm(); renderCCAll();
-  logActivity('entry','CC Job '+jobNum+' · '+tech+' · '+ccFmt(inv));
+  logActivity('entry','CC Job '+jobNum+' · '+tech+' · '+ccFmt(inv)+(visitType!=='single'?' ['+visitType+' visit]':''));
 }
 
 function ccRemoveJob(id) {
@@ -3589,9 +3759,10 @@ function ccWkSummary(data) {
   const jobs = (data.jobs||[]);
   const rev = jobs.reduce((s,j)=>s+j.invoice,0);
   const parts = jobs.reduce((s,j)=>s+j.parts,0);
+  const saPay = jobs.reduce((s,j)=>s+(j.cashCollected||0)*0.1,0);
   const techPay = (data.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i,data),0),0);
-  const profit = rev - parts - techPay;
-  return { rev, parts, techPay, profit };
+  const profit = rev - parts - techPay - saPay;
+  return { rev, parts, techPay, saPay, profit };
 }
 function ccGetMoRevenue() {
   const now = new Date();
@@ -3690,8 +3861,9 @@ function renderCCMonthStrip() {
   const jobs = wk.jobs||[];
   const rev = jobs.reduce((s,j)=>s+j.invoice,0);
   const parts = jobs.reduce((s,j)=>s+j.parts,0);
+  const saPay = jobs.reduce((s,j)=>s+(j.cashCollected||0)*0.1,0);
   const techPay = (wk.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i),0),0);
-  const profit = rev - parts - techPay;
+  const profit = rev - parts - techPay - saPay;
   const el = document.getElementById('cc-mstrip'); if(!el) return;
   el.innerHTML=`
     <div class="cc-ms-tile"><div class="cc-ms-lbl">Wk Revenue</div><div class="cc-ms-val" style="color:var(--text-1);">${ccFmt(rev)}</div></div>
@@ -3736,19 +3908,24 @@ function renderCCJobs() {
   }
   el.innerHTML = jobs.map(job=>{
     const payout = ccGetTechDayPay(job.tech, job.day);
-    const profit = job.invoice - job.parts - payout;
+    const saPay = (job.cashCollected||0) * 0.1;
+    const profit = job.invoice - job.parts - payout - (job.bonus||0) - saPay;
+    const visitLabels = { single:'', first:'First Visit', return:'Return Visit' };
+    const visitLabel = visitLabels[job.visitType||'single'];
     return `<div class="cc-jcard">
       <div class="cc-jhead">
         <span class="cc-jname">${job.tech}</span>
         ${job.jobNum?`<span class="cc-jnum">#${job.jobNum}</span>`:''}
+        ${visitLabel?`<span style="font-size:10px;padding:3px 8px;border-radius:10px;background:rgba(200,160,32,0.1);color:var(--gold-text);font-family:var(--font-mono);margin-left:auto;">${visitLabel}</span>`:''}
       </div>
       <div class="cc-metrics">
         <div><div class="cc-mlbl">Invoice</div><div class="cc-mval">${ccFmt(job.invoice)}</div></div>
         <div><div class="cc-mlbl">Parts</div><div class="cc-mval" style="color:var(--red);">${ccFmt(job.parts)}</div></div>
-        <div><div class="cc-mlbl">Tech Pay</div><div class="cc-mval" style="color:#3B82F6;">${ccFmt(payout)}</div></div>
-        <div><div class="cc-mlbl">Profit</div><div class="cc-mval" style="color:var(--green);">${ccFmt(profit)}</div></div>
+        <div><div class="cc-mlbl">Tech Pay</div><div class="cc-mval" style="color:#3B82F6;">${ccFmt(payout)}${job.visitType==='first'?'<span style="font-size:9px;color:var(--text-3);"> diag</span>':''}</div></div>
+        <div><div class="cc-mlbl">Profit</div><div class="cc-mval" style="color:${profit>=0?'var(--green)':'var(--red)'};">${ccFmt(profit)}</div></div>
       </div>
-      ${job.partsDeposit?`<div style="margin-top:8px;font-size:12px;color:var(--green);">Deposit received: ${ccFmt(job.partsDeposit)}</div>`:''}
+      ${job.cashCollected?`<div style="margin-top:6px;font-size:12px;color:var(--gold-text);">Cash collected: ${ccFmt(job.cashCollected)} → SA: ${ccFmt(saPay)}</div>`:''}
+      ${job.partsDeposit?`<div style="font-size:12px;color:var(--green);">Deposit received: ${ccFmt(job.partsDeposit)}</div>`:''}
       ${job.bonus?`<div style="font-size:12px;color:var(--amber);">Bonus: ${ccFmt(job.bonus)}</div>`:''}
       <button onclick="ccRemoveJob(${job.id})" style="margin-top:8px;font-size:12px;color:var(--text-3);background:none;border:none;cursor:pointer;">Remove</button>
     </div>`;
@@ -3785,12 +3962,17 @@ function renderCCWeeklyPL() {
   const parts = jobs.reduce((s,j)=>s+j.parts,0);
   const techPay = (wk.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i),0),0);
   const bonus = jobs.reduce((s,j)=>s+(j.bonus||0),0);
-  const profit = rev - parts - techPay - bonus;
+  const totalCashCollected = jobs.reduce((s,j)=>s+(j.cashCollected||0),0);
+  const saPay = totalCashCollected * 0.1;
+  const firstVisits = jobs.filter(j=>j.visitType==='first').length;
+  const returnVisits = jobs.filter(j=>j.visitType==='return').length;
+  const profit = rev - parts - techPay - bonus - saPay;
   const el = document.getElementById('cc-weekly-pl'); if(!el) return;
   const rows = [
     ['Total Revenue',rev,'var(--text-1)',false],
     ['Parts Cost',parts,'var(--red)',true],
     ['Tech Payouts',techPay,'#3B82F6',true],
+    ['SA Commission',saPay,'var(--gold-text)',true],
   ];
   if(bonus) rows.push(['Bonuses',bonus,'var(--amber)',true]);
   el.innerHTML = rows.map(([l,v,c,m])=>`
@@ -3799,15 +3981,18 @@ function renderCCWeeklyPL() {
   <div class="cc-pl-tot">
     <span style="font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-1);">Net Profit</span>
     <span style="font-family:var(--font-mono);font-size:28px;font-weight:700;color:${profit>=0?'var(--green)':'var(--red)'};">${profit<0?'−':''}${ccFmt(profit)}</span>
-  </div>`;
+  </div>` +
+  (totalCashCollected?`<div style="font-size:11px;color:var(--text-3);margin-top:8px;">SA commission on ${ccFmt(totalCashCollected)} collected</div>`:
+  '<div style="font-size:11px;color:var(--text-3);margin-top:8px;">Log cash collected on each job to track SA commission</div>') +
+  ((firstVisits||returnVisits)?`<div style="font-size:11px;color:var(--text-3);margin-top:4px;">${firstVisits} first visit${firstVisits!==1?'s':''} · ${returnVisits} return visit${returnVisits!==1?'s':''} this week</div>`:'');
 }
 
-// ADMIN ACTIVITY TAB
+// ADMIN ACTIVITY LOG — lives in Team tab
 function renderAdminActivity() {
   const activity = S.get('activity');
   const el = document.getElementById('admin-activity-log'); if(!el) return;
   if (!activity.length) {
-    el.innerHTML='<div style="padding:16px;background:var(--bg-1);border:1px dashed var(--border-strong);border-radius:12px;font-size:13px;color:var(--text-3);text-align:center;">No activity recorded yet. Activity logs when team members log entries, add parts, or create notes.</div>';
+    el.innerHTML='<div style="padding:16px;background:var(--bg-1);border:1px dashed var(--border-strong);border-radius:12px;font-size:13px;color:var(--text-3);text-align:center;">No activity recorded yet. Activity logs when team members sign in, log entries, add parts, or create notes.</div>';
     return;
   }
   el.innerHTML = activity.slice(0,50).map(a=>`
