@@ -1034,7 +1034,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
             <div class="wf-step" data-role="sa" data-step="7" onclick="openWorkflowStep('sa',7)"><div class="wf-num">07</div><div class="wf-body"><div class="wf-title">Confirm with Tech</div><div class="wf-desc">Green-light the job or release the tech to the next appointment.</div></div></div>
             <div class="wf-step" data-role="sa" data-step="8" onclick="openWorkflowStep('sa',8)"><div class="wf-num">08</div><div class="wf-body"><div class="wf-title">Update OctopusPro · Accurately</div><div class="wf-desc">Invoice accuracy is what drives your personal revenue. Every line item. Every time.</div></div></div>
           </div>
-          <div class="wf-lifeline"><div class="lifeline-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.21.34 2 .57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="lifeline-text"><div class="t">When in doubt — loop in Kayce.</div><div class="s">We solve it together. Always.</div></div></div>
+          <div class="wf-lifeline"><div class="lifeline-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.21.34 2 .57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="lifeline-text"><div class="t">When in doubt — loop in the shop.</div><div class="s">We solve it together. Always.</div></div></div>
         </div>
       </div>
       <div class="tab-panel" id="wf-diag">
@@ -1737,7 +1737,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
   <section class="screen" data-screen="admin">
     <div class="top-bar">
       <div class="top-brand-row"><div class="brand-mark" style="background:var(--brand-grad);"><span>K</span></div><div class="brand-wordmark"><div class="name">Foxhole <span class="owner-badge">Owner</span></div><div class="sub">ADMIN VIEW</div></div></div>
-      <div class="top-actions"><button class="theme-toggle" onclick="toggleTheme()"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button><div class="avatar-sm">K</div></div>
+      <div class="top-actions"><button class="theme-toggle" onclick="toggleTheme()"><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button><div class="avatar-sm" id="admin-avatar">O</div></div>
     </div>
     <div class="scroll-area">
 
@@ -1773,6 +1773,10 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
           <div class="adm-week-row"><span style="font-size:13px;color:var(--text-2);">SA commission</span><span style="font-family:var(--font-mono);font-weight:700;color:var(--gold-text);" id="adm-wk-sapay">—</span></div>
           <div class="adm-week-row"><span style="font-size:13px;color:var(--text-2);">Parts out</span><span style="font-family:var(--font-mono);font-weight:700;color:var(--red);" id="adm-wk-parts">—</span></div>
         </div>
+
+        <!-- Payroll Breakdown — per-tech + SA commission. Always visible (Weiser & Brown peripheral awareness). -->
+        <div class="adm-section-hd">Payroll This Week</div>
+        <div id="adm-payroll-breakdown" style="margin-bottom:4px;"></div>
 
         <!-- Data Backup — compact -->
         <div class="adm-section-hd">Data</div>
@@ -2203,7 +2207,7 @@ function enterApp() {
   } else if (selectedRole === 'sa') {
     const el = document.getElementById('sa-avatar'); if(el) el.textContent = email[0].toUpperCase();
     goTo('sa-home'); renderSA();
-  } else { goTo('admin'); ccLoadBills(); renderAdmin(); }
+  } else { const el = document.getElementById('admin-avatar'); if(el) el.textContent = email[0].toUpperCase(); goTo('admin'); ccLoadBills(); renderAdmin(); }
 }
 function goTo(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.dataset.screen === name));
@@ -3002,6 +3006,69 @@ function renderAdminOverview() {
   if(wkSaEl) wkSaEl.textContent = ccFmt ? ccFmt(wkSaPay) : '$0';
   const wkPartsEl = document.getElementById('adm-wk-parts');
   if(wkPartsEl) wkPartsEl.textContent = ccFmt ? ccFmt(wkParts) : '$0';
+
+  // ── Payroll Breakdown ─────────────────────────────────────────
+  const payEl = document.getElementById('adm-payroll-breakdown');
+  if (payEl) {
+    const techs = wk.techs || [];
+    const todayIdx = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1;
+
+    let techCards = '';
+    if (!techs.length) {
+      techCards = `<div style="padding:14px;background:var(--bg-1);border:1px dashed var(--border-strong);border-radius:12px;font-size:13px;color:var(--text-3);text-align:center;margin-bottom:8px;">No techs active this week. Log jobs in Command Center to see payroll.</div>`;
+    } else {
+      techCards = techs.map(tech => {
+        const wkEarned = CC_DAYS.reduce((s, _, i) => s + ccGetTechDayPay(tech, i, wk), 0);
+        const todayEarned = ccGetTechDayPay(tech, todayIdx, wk);
+        const techJobs = (wk.jobs || []).filter(j => j.tech === tech);
+        const pct = Math.min(100, (wkEarned / CC_WK_CAP) * 100);
+        const atCap = wkEarned >= CC_WK_CAP;
+        const nearCap = wkEarned >= CC_WK_CAP * 0.8;
+        const capColor = atCap ? 'var(--red)' : nearCap ? 'var(--amber)' : '#3B82F6';
+        const capNote = atCap ? '<div style="font-size:11px;color:var(--red);margin-top:5px;font-family:var(--font-mono);">⚠ Weekly cap reached</div>'
+          : nearCap ? `<div style="font-size:11px;color:var(--amber);margin-top:5px;font-family:var(--font-mono);">${ccFmt(CC_WK_CAP - wkEarned)} to cap</div>` : '';
+        return `<div style="background:var(--bg-1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+            <div>
+              <div style="font-size:14px;font-weight:700;">${tech}</div>
+              <div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono);margin-top:2px;">${techJobs.length} job${techJobs.length===1?'':'s'} &nbsp;·&nbsp; Today ${ccFmt(todayEarned)}</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:var(--font-mono);font-weight:700;font-size:20px;color:${capColor};">${ccFmt(wkEarned)}</div>
+              <div style="font-size:10px;color:var(--text-3);">of ${ccFmt(CC_WK_CAP)} cap</div>
+            </div>
+          </div>
+          <div style="height:5px;background:var(--bg-2);border-radius:3px;overflow:hidden;">
+            <div style="width:${pct}%;height:100%;background:${capColor};border-radius:3px;"></div>
+          </div>
+          ${capNote}
+        </div>`;
+      }).join('');
+    }
+
+    // SA Commission row
+    const cashTotal = wkJobs.reduce((s, j) => s + (j.cashCollected || 0), 0);
+    const saComm = wkJobs.reduce((s, j) => s + (j.cashCollected || 0) * 0.1, 0);
+    const saCard = `<div style="background:var(--bg-1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <div style="font-size:14px;font-weight:700;">SA Commission</div>
+        <div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono);margin-top:2px;">${ccFmt(cashTotal)} cash collected × 10%</div>
+      </div>
+      <div style="font-family:var(--font-mono);font-weight:700;font-size:20px;color:var(--gold-text);">${ccFmt(saComm)}</div>
+    </div>`;
+
+    // Total payroll banner
+    const totalPay = wkTechPay + saComm;
+    const totalBanner = `<div style="background:var(--bg-2);border:1px solid var(--border-strong);border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div>
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.06em;font-family:var(--font-mono);color:var(--text-3);">Total Payroll Owed</div>
+        <div style="font-size:11px;color:var(--text-3);margin-top:3px;">Tech pay + SA commission</div>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:26px;font-weight:700;color:var(--amber);">${ccFmt(totalPay)}</div>
+    </div>`;
+
+    payEl.innerHTML = techCards + saCard + totalBanner;
+  }
 }
 
 // Tech reserve for admin-cc
