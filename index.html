@@ -610,9 +610,14 @@
   .entry-row.pressing { background: rgba(239,68,68,0.08); border-color: var(--red); }
   .entry-row .er-left { flex: 1; }
   .entry-row .er-type { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
-  .entry-row .er-type.deposit { color: var(--green); } .entry-row .er-type.parts-order { color: var(--amber); }
-  .entry-row .er-type.labor { color: #3B82F6; } .entry-row .er-type.paid,.entry-row .er-type.paid-in-full { color: var(--gold-text); }
-  .entry-row .er-type.diagnostic { color: #a855f7; }
+  .entry-row .er-type.deposit, .entry-row .er-type.parts-deposit { color: var(--green); }
+  .entry-row .er-type.parts-order, .entry-row .er-type.parts-ordered { color: var(--amber); }
+  .entry-row .er-type.labor, .entry-row .er-type.labor-lined { color: #3B82F6; }
+  .entry-row .er-type.paid, .entry-row .er-type.paid-in-full { color: var(--gold-text); }
+  .entry-row .er-type.diagnostic, .entry-row .er-type.diagnostic-fee, .entry-row .er-type.diag-labor { color: #a855f7; }
+  /* Placeholder contrast — WCAG 1.4.3 minimum 4.5:1. Firefox defaults opacity ~0.54; force 1. */
+  input::placeholder, textarea::placeholder { color: var(--text-3); opacity: 1; }
+  .panel-field input.amount-input::placeholder { color: var(--text-2); opacity: 0.7; font-size: 22px; }
   .entry-row .er-note { font-size: 13px; color: var(--text-2); }
   .entry-row .er-time { font-family: var(--font-mono); font-size: 9px; color: var(--text-3); margin-top: 2px; }
   .entry-row .er-amount { font-family: var(--font-mono); font-weight: 600; font-size: 16px; }
@@ -1144,8 +1149,23 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
           <span style="font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--green);" id="sph-my-cut">$0</span>
         </div>
         <div class="sps-bar-bg"><div class="sps-bar-fill mine" id="sph-my-bar" style="width:0%"></div></div>
-        <div style="font-size:10px;color:var(--text-3);margin-top:4px;" id="sph-my-foot">$800 to go · 0% there</div>
+        <div style="font-size:10px;color:var(--text-3);margin-top:4px;" id="sph-my-foot">$800 to target</div>
       </div>
+      <!-- SA Workflow Guide — progressive disclosure accordion.
+           Research: NN/G Progressive Disclosure 1995; Weiser & Brown calm computing 1996.
+           The 8-step SA workflow lives in tech-field (wf-sa) but SAs had no access mid-workflow.
+           This collapses it to a tap-to-expand guide on the homescreen where they actually are. -->
+      <div style="margin:0 14px 10px;">
+        <button onclick="toggleSAWorkflow()" style="width:100%;display:flex;justify-content:space-between;align-items:center;background:var(--bg-1);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:15px;">📋</span>
+            <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-2);font-weight:700;">Workflow Guide</span>
+          </div>
+          <span style="font-family:var(--font-mono);font-size:13px;color:var(--gold-text);font-weight:700;" id="sa-wf-caret">▸</span>
+        </button>
+        <div id="sa-wf-steps" style="display:none;background:var(--bg-1);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;"></div>
+      </div>
+
       <!-- Entry list for selected day -->
       <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;margin:4px 14px 8px;display:flex;justify-content:space-between;align-items:center;">
         <span id="sa-home-day-label">Today's Entries</span>
@@ -1194,7 +1214,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
     <div class="scroll-area">
       <div class="sa-hero">
         <div class="sa-hero-top">
-          <div class="sa-hero-label">● Revenue Forecast</div>
+          <div class="sa-hero-label">● Revenue</div>
           <div class="range-pills">
             <button class="range-pill active" onclick="setRange(this)">Day</button>
             <button class="range-pill" onclick="setRange(this)">3 Day</button>
@@ -1941,7 +1961,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
         <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span class="nav-label">Team</span>
       </button>
-      <button class="nav-btn" onclick="goTo('admin-cc')">
+      <button class="nav-btn" onclick="admGoCommand(this)">
         <svg viewBox="0 0 24 24"><path d="M4 20 V12 M10 20 V6 M16 20 V10 M22 20 V4"/></svg>
         <span class="nav-label">Command</span>
       </button>
@@ -2278,7 +2298,7 @@ Without this, the back button is clipped behind the status bar in PWA mode. */
 </div>
 <script>
 // APP VERSION — single source of truth. Update on every iteration.
-const APP_VERSION = 'v39';
+const APP_VERSION = 'v40';
 
 // Force-update for PWA installs: clears service worker + caches, NEVER touches localStorage.
 // Team member data (members, cashflow, parts, notes, planning info, training progress) is preserved.
@@ -2839,7 +2859,7 @@ function renderSAHome() {
   const techP = Math.min(100,(techE/techT)*100);
   const mc=document.getElementById('sph-my-cut'); if(mc) mc.textContent='$'+myE.toFixed(0);
   const mb=document.getElementById('sph-my-bar'); if(mb) mb.style.width=myP+'%';
-  const mf=document.getElementById('sph-my-foot'); if(mf) mf.textContent = myE>=myT?'✓ Target reached!':'$'+(myT-myE).toFixed(0)+' to go · '+myP.toFixed(0)+'% there';
+  const mf=document.getElementById('sph-my-foot'); if(mf) mf.textContent = myE>=myT?'✓ Target reached!':'$'+(myT-myE).toFixed(0)+' to $800 target';
   // sph-tech-pay/bar/foot removed in v23 — no element to update
 
   // Inline notes on home screen
@@ -2914,6 +2934,50 @@ function renderSAHomeDay() {
     </div>`;
   }).join('');
 }
+// SA Workflow Guide — progressive disclosure accordion on sa-home.
+// SA Workflow Guide — progressive disclosure on sa-home.
+// NN/G Progressive Disclosure 1995; Weiser & Brown calm computing 1996.
+// SAs had no workflow access from their own screens (it was buried in tech-field).
+let saWfOpen = false;
+const SA_WF_STEPS = [
+  { n:"01", t:"Receive the Inbound",              d:"Answer warmly. Get their name, platform, and what is wrong. Listen first." },
+  { n:"02", t:"Book in OctopusPro",               d:"Schedule the window. Confirm address, VIN, and contact. Quote the Parts Recon fee." },
+  { n:"03", t:"Tag the Tech in Notes",            d:"Brief them on anything the customer flagged. Techs get tagged in notes — nothing is sent." },
+  { n:"04", t:"Tech's Call Comes In",             d:"Listen. Repeat findings back. Confirm parts, labor hours, and total." },
+  { n:"05", t:"Call the Customer. Sell the Job.", d:"Walk through the Parts Recon findings. Present the estimate. Answer every question." },
+  { n:"06", t:"Collect Deposit & Signature",      d:"Parts deposit + Parts Recon fee. Digital signature required before any work begins. $250 floor applies." },
+  { n:"07", t:"Confirm with Tech",                d:"Green-light the job or release the tech to the next appointment." },
+  { n:"08", t:"Update OctopusPro. Accurately.",   d:"Invoice accuracy is what drives your personal revenue. Every line item. Every time." }
+];
+function toggleSAWFStep(el) {
+  var desc = el.querySelector(".sa-wf-desc"); if (!desc) return;
+  var open = desc.style.display === "block";
+  desc.style.display = open ? "none" : "block";
+  var arrow = el.querySelector(".sa-wf-arrow"); if (arrow) arrow.textContent = open ? "\u203a" : "\u2304";
+}
+function toggleSAWorkflow() {
+  saWfOpen = !saWfOpen;
+  var caret = document.getElementById("sa-wf-caret");
+  var steps = document.getElementById("sa-wf-steps");
+  if (!steps || !caret) return;
+  caret.textContent = saWfOpen ? "\u25be" : "\u25b8";
+  if (!saWfOpen) { steps.style.display = "none"; return; }
+  steps.style.display = "block";
+  if (steps.innerHTML) return;
+  var rows = SA_WF_STEPS.map(function(s) {
+    return '<div onclick="toggleSAWFStep(this)" style="padding:12px 14px;border-top:1px solid var(--border);cursor:pointer;user-select:none;-webkit-user-select:none;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">' +
+        '<div style="display:flex;align-items:center;gap:10px;">' +
+          '<div style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--gold-text);flex-shrink:0;">' + s.n + '</div>' +
+          '<div style="font-size:14px;font-weight:600;color:var(--text-1);">' + s.t + '</div>' +
+        '</div>' +
+        '<span class="sa-wf-arrow" style="font-family:var(--font-mono);font-size:14px;color:var(--text-3);flex-shrink:0;">\u203a</span>' +
+      '</div>' +
+      '<div class="sa-wf-desc" style="display:none;font-size:13px;color:var(--text-2);line-height:1.5;margin-top:6px;padding-left:28px;">' + s.d + '</div>' +
+    '</div>';
+  }).join("");
+  steps.innerHTML = rows + '<div style="padding:12px 14px;border-top:1px solid var(--border);"><div style="font-size:12px;color:var(--text-3);font-style:italic;">When in doubt \u2014 loop in the shop. We solve it together. Always.</div></div>';
+}
 // PAYROLL PULSE — always-visible in sa-command (non-collapsible as of v15)
 // Research: Goal Gradient Effect (Kivetz 2006) — visible progress toward target accelerates closing.
 // Weiser & Brown (1996) peripheral awareness — payroll visible without demanding focus.
@@ -2932,7 +2996,7 @@ function renderPayrollPulse() {
   const myT = 800;
   const myE = Math.min(cash * 0.1, myT);
   const myP = Math.min(100, (myE/myT)*100);
-  const myFoot = myE >= myT ? '✓ Target reached!' : '$'+(myT-myE).toFixed(0)+' to go · '+myP.toFixed(0)+'% there';
+  const myFoot = myE >= myT ? '✓ Target reached!' : '$'+(myT-myE).toFixed(0)+' to $800 target';
   // sa-command strip
   const mc = document.getElementById('pp-my-chip'); if(mc) mc.textContent = '$'+myE.toFixed(0);
   const mb = document.getElementById('pp-my-bar'); if(mb) mb.style.width = myP+'%';
@@ -3112,7 +3176,7 @@ function renderAdminOverview() {
   const wkRev = wkJobs.reduce((s,j)=>s+j.invoice,0);
   const wkParts = wkJobs.reduce((s,j)=>s+j.parts,0);
   const wkSaPay = wkJobs.reduce((s,j)=>s+(j.cashCollected||0)*0.1,0);
-  const wkTechPay = (wk.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i,wk),0),0);
+  const wkTechPay = ccUniqueTechs(wk).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i,wk),0),0);
 
   const revSubEl = document.getElementById('adm-wk-rev-sub');
   if(revSubEl) revSubEl.textContent = 'This week: ' + (ccFmt ? ccFmt(wkRev) : '$0');
@@ -3310,7 +3374,17 @@ function buildDots(activity) {
   return dots.join('');
 }
 
+let admLastTab = 'adm-overview';
+function admGoCommand(btn) {
+  // Command navigates to admin-cc (different screen), not a panel switch.
+  // We mark it active briefly so the button feels responsive, then navigate.
+  document.querySelectorAll('#admin-screen-nav .nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  goTo('admin-cc');
+}
+
 function admSwitchTab(id, btn) {
+  admLastTab = id;
   document.querySelectorAll('.adm-panel').forEach(p => p.classList.remove('active'));
   const panel = document.getElementById(id); if(panel) panel.classList.add('active');
   document.querySelectorAll('#admin-screen-nav .nav-btn').forEach(b => b.classList.remove('active'));
@@ -3427,7 +3501,7 @@ function renderAdminPayroll(){
   const weekKey=ccWKey(admPayOff);
   const lbl=document.getElementById('adm-pay-wklbl');if(lbl)lbl.textContent=ccWkLabel(admPayOff);
   const nb=document.getElementById('adm-pay-next-btn');if(nb)nb.disabled=admPayOff>=0;
-  const jobs=wk.jobs||[], techs=wk.techs||[];
+  const jobs=wk.jobs||[], techs=ccUniqueTechs(wk);
   const log=admPayLoadLog();
   const todayIdx=new Date().getDay()===0?6:new Date().getDay()-1;
 
@@ -3574,6 +3648,13 @@ function renderAdminTrainingProgress() {
 function renderAdmin() {
   ccLoadBills();
   renderAdminOverview();
+  // Re-sync nav highlight to whichever panel is actually active.
+  // admGoCommand() marks Command active before navigating away;
+  // this restores the correct tab button when the user returns.
+  const panelOrder = ['adm-overview','adm-health','adm-payroll','adm-team'];
+  const activePanel = document.querySelector('.adm-panel.active');
+  const idx = activePanel ? panelOrder.indexOf(activePanel.id) : 0;
+  document.querySelectorAll('#admin-screen-nav .nav-btn').forEach((b,i)=>b.classList.toggle('active',i===Math.max(0,idx)));
 }
 
 function renderAdminTeam() {
@@ -3957,6 +4038,19 @@ function ccSaveWeek() {
 function ccGetWeek() { return ccWeekCache[ccWeekOff] || ccLoadWeek(ccWeekOff); }
 function ccFmt(n) { return '$'+Math.abs(Math.round(n)).toLocaleString('en-US'); }
 function ccCalcPayout(inv) { return inv >= 500 ? 200 : 100; }
+// ccUniqueTechs — derives the active tech list from logged jobs.
+// wk.techs was a legacy per-week manual array; since v35 techs live in the
+// unified Team roster. Jobs are saved with tech name but wk.techs was never
+// auto-populated, so all cap/pay calcs that iterated wk.techs returned $0.
+// This helper reads unique tech names from the jobs themselves (source of truth)
+// and falls back to any legacy wk.techs entries for backward compat.
+function ccUniqueTechs(wk) {
+  const d = wk || {};
+  const fromJobs = [...new Set((d.jobs||[]).map(j=>j.tech).filter(Boolean))];
+  const legacy = (d.techs||[]).filter(t=>!fromJobs.includes(t));
+  return [...fromJobs, ...legacy];
+}
+
 function ccGetTechDayPay(tech, day, data) {
   const d = data || ccGetWeek();
   const jobs = (d.jobs||[]).filter(j=>j.day===day&&j.tech===tech);
@@ -4031,8 +4125,10 @@ function ccOpenForm() {
   renderCCTechSelect();
 }
 function ccCloseForm() {
+  ccEditingJobId = null;
   const btn = document.getElementById('cc-add-btn'); if(btn) btn.style.display='block';
   const form = document.getElementById('cc-job-form'); if(form) form.style.display='none';
+  const title = document.getElementById('cc-form-title'); if(title) title.textContent='New Job — '+CC_DAYS_FULL[ccActiveDay];
   ['cc-f-jobnum','cc-f-inv','cc-f-parts','cc-f-deposit','cc-f-bonus','cc-f-cashcol'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.value='';
   });
@@ -4087,6 +4183,38 @@ function ccUpdatePreview() {
     ${bonus?`<div><div class="cc-mlbl">Bonus</div><div class="cc-mval" style="color:var(--amber);">${ccFmt(bonus)}</div></div>`:''}`;
 }
 
+// CC Job Edit — allows in-place editing of logged CC job cards
+let ccEditingJobId = null;
+function ccOpenEditJob(id) {
+  const wk = ccGetWeek();
+  const job = (wk.jobs||[]).find(j=>j.id===id);
+  if (!job) return;
+  ccEditingJobId = id;
+  const fields = {
+    'cc-f-jobnum': job.jobNum||'',
+    'cc-f-inv': job.invoice||'',
+    'cc-f-parts': job.parts||'',
+    'cc-f-deposit': job.partsDeposit||'',
+    'cc-f-cashcol': job.cashCollected||'',
+    'cc-f-bonus': job.bonus||''
+  };
+  Object.entries(fields).forEach(([fid,val]) => { const el=document.getElementById(fid); if(el) el.value=val||''; });
+  renderCCTechSelect();
+  const sel=document.getElementById('cc-f-tech'); if(sel) sel.value=job.tech||'';
+  const type=job.jobType||'labor';
+  document.querySelectorAll('.cc-visit-chip').forEach(b=>{
+    const t=b.textContent.toLowerCase();
+    b.classList.toggle('active',(type==='diagnostic'&&t.includes('diagnostic'))||(type==='both'&&t.includes('both'))||(type==='labor'&&!t.includes('diagnostic')&&!t.includes('both')));
+  });
+  const noteEl=document.getElementById('cc-visit-note');
+  const notes={diagnostic:'Inspection / recon visit. Tech pay = $100 flat.',labor:'Service / install work. Tech pay = calcPayout(invoice).',both:'Same-day diagnostic + labor close. Tech pay = calcPayout(full invoice).'};
+  if(noteEl) noteEl.textContent=notes[type]||'';
+  const title=document.getElementById('cc-form-title'); if(title) title.textContent='Edit Job — '+CC_DAYS_FULL[job.day];
+  const btn=document.getElementById('cc-add-btn'); if(btn) btn.style.display='none';
+  const form=document.getElementById('cc-job-form'); if(form) form.style.display='block';
+  ccUpdatePreview();
+}
+
 function ccSaveJob() {
   const tech = document.getElementById('cc-f-tech')?.value;
   if (!tech) { alert('Select a technician.'); return; }
@@ -4102,7 +4230,13 @@ function ccSaveJob() {
   const payout = jobType==='diagnostic' ? 100 : ccCalcPayout(inv);
   const wk = ccGetWeek();
   if (!wk.jobs) wk.jobs = [];
-  wk.jobs.push({ id:Date.now(), day:ccActiveDay, tech, invoice:inv, parts, bonus, payout, partsDeposit:deposit, cashCollected, jobType, jobNum });
+  if (ccEditingJobId) {
+    const idx = wk.jobs.findIndex(j=>j.id===ccEditingJobId);
+    if (idx > -1) wk.jobs[idx] = { ...wk.jobs[idx], tech, invoice:inv, parts, bonus, payout, partsDeposit:deposit, cashCollected, jobType, jobNum };
+    ccEditingJobId = null;
+  } else {
+    wk.jobs.push({ id:Date.now(), day:ccActiveDay, tech, invoice:inv, parts, bonus, payout, partsDeposit:deposit, cashCollected, jobType, jobNum });
+  }
   ccSaveWeek(); ccCloseForm(); renderCCAll();
   logActivity('entry','CC Job '+jobNum+' · '+tech+' · '+ccFmt(inv)+(jobType!=='labor'?' ['+jobType+']':''));
 }
@@ -4131,7 +4265,7 @@ function ccWkSummary(data) {
   const rev = jobs.reduce((s,j)=>s+j.invoice,0);
   const parts = jobs.reduce((s,j)=>s+j.parts,0);
   const saPay = jobs.reduce((s,j)=>s+(j.cashCollected||0)*0.1,0);
-  const techPay = (data.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i,data),0),0);
+  const techPay = ccUniqueTechs(data).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i,data),0),0);
   const profit = rev - parts - techPay - saPay;
   return { rev, parts, techPay, saPay, profit };
 }
@@ -4233,7 +4367,7 @@ function renderCCMonthStrip() {
   const rev = jobs.reduce((s,j)=>s+j.invoice,0);
   const parts = jobs.reduce((s,j)=>s+j.parts,0);
   const saPay = jobs.reduce((s,j)=>s+(j.cashCollected||0)*0.1,0);
-  const techPay = (wk.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i),0),0);
+  const techPay = ccUniqueTechs(wk).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i),0),0);
   const profit = rev - parts - techPay - saPay;
   const el = document.getElementById('cc-mstrip'); if(!el) return;
   el.innerHTML=`
@@ -4263,7 +4397,7 @@ function renderCCDayStats() {
   el.style.display='grid';
   const rev=jobs.reduce((s,j)=>s+j.invoice,0);
   const parts=jobs.reduce((s,j)=>s+j.parts,0);
-  const techPay=(wk.techs||[]).reduce((s,t)=>s+ccGetTechDayPay(t,ccActiveDay),0);
+  const techPay=ccUniqueTechs(wk).reduce((s,t)=>s+ccGetTechDayPay(t,ccActiveDay),0);
   const sr=document.getElementById('cc-s-rev'); if(sr) sr.textContent=ccFmt(rev);
   const sp=document.getElementById('cc-s-parts'); if(sp) sp.textContent=ccFmt(parts);
   const spr=document.getElementById('cc-s-profit'); if(spr) spr.textContent=ccFmt(rev-parts-techPay);
@@ -4336,7 +4470,10 @@ function renderCCJobs() {
       ${job.cashCollected?`<div style="margin-top:6px;font-size:13px;color:var(--gold-text);">Cash collected: ${ccFmt(job.cashCollected)} → SA: ${ccFmt(saPay)}</div>`:''}
       ${job.partsDeposit?`<div style="font-size:13px;color:var(--green);">Deposit received: ${ccFmt(job.partsDeposit)}</div>`:''}
       ${job.bonus?`<div style="font-size:13px;color:var(--amber);">Bonus: ${ccFmt(job.bonus)}</div>`:''}
-      <button onclick="ccRemoveJob(${job.id})" style="margin-top:8px;font-size:13px;color:var(--text-3);background:none;border:none;cursor:pointer;">Remove</button>
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button onclick="ccOpenEditJob(${job.id})" style="font-size:13px;color:var(--gold-text);background:none;border:1px solid rgba(200,160,32,0.3);border-radius:6px;padding:4px 12px;cursor:pointer;">Edit</button>
+        <button onclick="ccRemoveJob(${job.id})" style="font-size:13px;color:var(--text-3);background:none;border:none;cursor:pointer;">Remove</button>
+      </div>
     </div>`;
   }).join('');
 }
@@ -4345,7 +4482,7 @@ function renderCCPayouts() {
   const wk = ccGetWeek();
   const jobs = (wk.jobs||[]).filter(j=>j.day===ccActiveDay);
   const el = document.getElementById('cc-tech-payouts'); if(!el) return;
-  const active = (wk.techs||[]).filter(t=>jobs.some(j=>j.tech===t));
+  const active = ccUniqueTechs(wk).filter(t=>jobs.some(j=>j.tech===t));
   if (!active.length) { el.style.display='none'; return; }
   el.style.display='block';
   const title = document.getElementById('cc-payouts-title');
@@ -4369,7 +4506,7 @@ function renderCCWeeklyPL() {
   const jobs = wk.jobs||[];
   const rev = jobs.reduce((s,j)=>s+j.invoice,0);
   const parts = jobs.reduce((s,j)=>s+j.parts,0);
-  const techPay = (wk.techs||[]).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i),0),0);
+  const techPay = ccUniqueTechs(wk).reduce((s,t)=>s+CC_DAYS.reduce((ds,_,i)=>ds+ccGetTechDayPay(t,i),0),0);
   const bonus = jobs.reduce((s,j)=>s+(j.bonus||0),0);
   const totalCashCollected = jobs.reduce((s,j)=>s+(j.cashCollected||0),0);
   const saPay = totalCashCollected * 0.1;
